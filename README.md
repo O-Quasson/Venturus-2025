@@ -1,4 +1,4 @@
 # Venturus-2025
-https://prod.liveshare.vsengsaas.visualstudio.com/join?EB6ACF56C1D0C26526C4ABDF34FD313AE60D
+https://prod.liveshare.vsengsaas.visualstudio.com/join?EEB17B5F9F9A9E9E51C1EBD69A8C4DA42103
 
 https://github.com/alexnasciment3/projeto_bento_2S_2025
