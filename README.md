@@ -1,5 +1,7 @@
 https://prod.liveshare.vsengsaas.visualstudio.com/join?4E3A586F8C6278D47B918417EEC9FE1C8B89
 
+https://github.com/alexnasciment3/projeto_bento_2S_2025
+
 Sistema de Adoção - API REST com Node.js
 🔧Regras do Projeto
 Este projeto tem como objetivo o desenvolvimento de uma API para um sistema de adoção de animais. O projeto deve ser implementado utilizando as seguintes tecnologias obrigatórias:
@@ -486,3 +488,4 @@ Rotas da API
 
 
 | POST /doacoes
+
