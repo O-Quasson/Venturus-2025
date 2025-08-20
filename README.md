@@ -1,4 +1,6 @@
-resuma isso me explicando como se estivesse explicando para uma criança burra de 4 anos Sistema de Adoção - API REST com Node.js
+https://prod.liveshare.vsengsaas.visualstudio.com/join?4E3A586F8C6278D47B918417EEC9FE1C8B89
+
+Sistema de Adoção - API REST com Node.js
 🔧Regras do Projeto
 Este projeto tem como objetivo o desenvolvimento de uma API para um sistema de adoção de animais. O projeto deve ser implementado utilizando as seguintes tecnologias obrigatórias:
 
@@ -481,5 +483,6 @@ Rotas da API
 | GET /animais/:id
 
 | POST /login
+
 
 | POST /doacoes
