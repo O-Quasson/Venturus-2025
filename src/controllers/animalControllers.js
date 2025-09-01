@@ -21,8 +21,6 @@ const postAnimal = async (req, res) => {
       vacinado: animal.vacinado,
       descricao: animal.descricao,
       foto: animal.foto,
-      createdAt: animal.createdAt,  
-      updatedAt: animal.updatedAt   
     });
 
   } catch (error) {
@@ -31,6 +29,7 @@ const postAnimal = async (req, res) => {
   }
 };
 
-export { createAnimal }
 
 const animais = await Animal.findAll();
+
+export { createAnimal }

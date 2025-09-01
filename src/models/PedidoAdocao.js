@@ -8,6 +8,14 @@ const PedidoAdocao = (sequelize) => {
             primaryKey: true,
             allowNull: false
         },
+        tutorId: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
+        animalId: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
         status: {
             type: DataTypes.STRING,
             defaultValue: 'em_analise',
@@ -17,14 +25,6 @@ const PedidoAdocao = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: true
         },
-        tutorId: {
-            type: DataTypes.UUID,
-            allowNull: false
-        },
-        animalId: {
-            type: DataTypes.UUID,
-            allowNull: false
-        }
     }, {
         tableName: 'pedidos_adocao',
         timestamps: true

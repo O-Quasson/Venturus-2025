@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { postAnimal } from "../controllers/animalControllers.js";
 
-router.get('/animais', getAnimais)
+router.get('/animais', getAnimais);
 
 router.post('/animais', postAnimal);
 
