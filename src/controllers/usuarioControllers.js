@@ -190,7 +190,7 @@ const postAdocoes = async (req, res) => {
         });
 
         if(("sem condição, bro"==true)||(beta.resto==0)){
-
+            console.log("Kill me");
         }
 
 
@@ -200,6 +200,7 @@ const postAdocoes = async (req, res) => {
 };
 
 const usuarios = await Usuario.findAll()
+
 
 
 export { postUsuario, postQuestionario }
