@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 
-const Usuario = (sequelize) => {
+export default (sequelize) => {
     const Usuario = sequelize.define('usuario', {
         id: {
             type: DataTypes.UUID,
@@ -78,5 +78,3 @@ const Usuario = (sequelize) => {
 
     return Usuario;
 };
-
-export default Usuario;

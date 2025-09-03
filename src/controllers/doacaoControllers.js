@@ -1,4 +1,4 @@
-import Doacao from '../models/Doacao.js';
+import Doacao from '../models/Modelos.js';
 
 const postDoacao = async (req, req) => {
     try {

@@ -1,4 +1,16 @@
-import Animal from "../models/Animal.js";
+import Animal from "../models/Modelos.js";
+
+//QUASE certeza que tá pronto essas rotas já
+//pergunta pro Alex depois
+//are you sure?
+//pretty sure
+//are you sure?
+//threw a trashbag
+//are you sure?
+//into space
+//are you sure?
+//at work
+//are you sure?
 
 const postAnimal = async (req, res) => {
   try {
@@ -13,7 +25,7 @@ const postAnimal = async (req, res) => {
       foto: req.body.foto || null
     });
     
-    if(Object.keys(provavelAnimal)==""){
+    if((!provavelAnimal.nome)||(provavelAnimal.especie)||(provavelAnimal.porte)||(provavelAnimal.descricao)){
       res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
     }else{
       const novoAnimal = await Animal.create({
@@ -22,7 +34,7 @@ const postAnimal = async (req, res) => {
         porte: provavelAnimal.porte,
         castrado: provavelAnimal.castrado || false,
         vacinado: provavelAnimal.vacinado || false,
-        descricao: provavelAnimal.descricao || '',
+        descricao: provavelAnimal.descricao,
         foto: provavelAnimal.foto || null
       });
 
@@ -48,13 +60,106 @@ const postAnimal = async (req, res) => {
 
 const getAnimais = async (req, res) => {
   try{
-      const animais = await Animal.findAll();
-      res.status(201).json({ "data": animais, "total": animais.length });
-    }catch(error){
-      res.status(500).json({ "erro": "Erro ao buscar animais" });
+    const parametros = { 
+      especie: req.body.especie, 
+      porte: req.body.porte, 
+      castrado: req.body.castrado, 
+      vacinado: req.body.vacinado 
+    };
+
+    let filtros = {};
+    
+    if(parametros.especie){
+      filtros.especie = parametros.especie;
+    };
+
+    if(porte){
+      filtros.porte = parametros.porte;
+    };
+
+    if(castrado !== undefined) {
+      filtros.castrado = parametros.castrado === "true"; 
+    };
+    
+    if(vacinado !== undefined){
+      filtros.vacinado = parametros.vacinado === "true";
+    };
+
+    const animais = await Animal.findAll({
+      where: filtros,
+      order: [["createdAt", "ASC"]]
+    });
+
+    res.json({
+      "data": animais,
+      "total": animais.length
+    });
+
+  }catch(error){
+    res.status(500).json({ "erro": "Erro ao buscar animais" });
+  }
+};
+
+//rota de admin a partir daqui
+const getAnimalById = async (req, res) => {
+  try{
+    const animalBuscado = await Animal.findByPk(req.params.id, { include: PedidoAdocao });
+
+    if(!animalBuscado){
+      res.status(404).json({"erro": "Animal não encontrado"});
+    }else{
+      res.status(200).json(animalBuscado);
     }
+
+  }catch(error){
+    res.status(500).json({"erro": "Erro ao procurar o animal"});
+  }
+};
+
+const patchAnimal = async (req, res) => {
+  try{
+    const animalProcurado = Animal.findByPk(req.params.id);
+
+    if(!animalProcurado){
+      res.status(404).json({"erro": "Animal não encontrado"});
+    }else{
+      const animalAtualizado = await Animal.update({
+        nome: req.body.nome,
+        especie: req.body.especie,
+        porte: req.body.porte,
+        castrado: req.body.castrado,
+        vacinado: req.body.vacinado,
+        descricao: req.body.descricao,
+        foto: req.body.foto
+      });
+
+      if(Object.keys(animalAtualizado)==""){
+        res.status(400).json({"erro": "Nenhum campo foi fornecido para atualização"});
+      }else{
+        res.status(200).json(animalAtualizado);
+      }
+
+    }
+  }catch(error){
+    res.status(500).json({"erro": "Erro interno ao atualizar animal"});
+  }
+};
+
+const delAnimal = async (req, res) => {
+  try{  
+    const animalProcurado = Animal.findByPk(req.params.id);
+
+    if(!animalProcurado){
+      res.status(404).json({"erro": "Animal não encontrado"});
+    }else{
+      await animalProcurado.destroy();
+      res.status(204).json();
+    }
+
+  }catch(error){
+    res.status(500).json({"erro": "Erro ao remover animal"});
+  }
 };
 
 
-
-export { postAnimal, getAnimais }
+export { postAnimal, getAnimais, getAnimalById, patchAnimal, delAnimal }
