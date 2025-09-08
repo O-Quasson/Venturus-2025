@@ -1,8 +1,7 @@
 import { Questionario, Usuario } from "../models/Modelos.js";
 
 const postQuestionario = async (req, res) => {
-    try{
-        
+    try{ 
         const novoQuestionario = ({
             usuarioID: req.body.usuarioID,
             empregado: req.body.empregado,

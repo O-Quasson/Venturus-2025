@@ -25,10 +25,10 @@ const postAnimal = async (req, res) => {
       foto: req.body.foto || null
     });
     
-    if((!provavelAnimal.nome)||(provavelAnimal.especie)||(provavelAnimal.porte)||(provavelAnimal.descricao)){
+    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)){
       res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
     }else{
-      const novoAnimal = await Animal.create({
+      const novoAnimal = await AnimalModel.create({
         nome: provavelAnimal.nome,
         especie: provavelAnimal.especie,
         porte: provavelAnimal.porte,
@@ -73,15 +73,15 @@ const getAnimais = async (req, res) => {
       filtros.especie = parametros.especie;
     };
 
-    if(porte){
+    if(parametros.porte){
       filtros.porte = parametros.porte;
     };
 
-    if(castrado !== undefined) {
+    if(parametros.castrado !== undefined) {
       filtros.castrado = parametros.castrado === "true"; 
     };
     
-    if(vacinado !== undefined){
+    if(parametros.vacinado !== undefined){
       filtros.vacinado = parametros.vacinado === "true";
     };
 
@@ -101,6 +101,74 @@ const getAnimais = async (req, res) => {
 };
 
 //rota de admin a partir daqui
+
+const getAnimaisAdmin = async (req, res) => {
+  try{
+    const parametros = { 
+      id: req.body.id,
+      nome: req.body.nome,
+      especie: req.body.especie, 
+      porte: req.body.porte, 
+      castrado: req.body.castrado, 
+      vacinado: req.body.vacinado,
+      adotado: req.body.adotado,
+      createdAt: req.body.createdAt,
+      updatedAt: req.body.updatedAt
+    };
+
+    let filtros = {};
+
+    if(parametros.id){
+      filtros.id = parametros.id;
+    };
+
+    if(parametros.nome){
+      filtros.nome = parametros.nome;
+    };
+    
+    if(parametros.especie){
+      filtros.especie = parametros.especie;
+    };
+
+    if(parametros.porte){
+      filtros.porte = parametros.porte;
+    };
+
+    if(parametros.castrado !== undefined) {
+      filtros.castrado = parametros.castrado === "true"; 
+    };
+    
+    if(parametros.vacinado !== undefined){
+      filtros.vacinado = parametros.vacinado === "true";
+    };
+
+    if(parametros.adotado !== undefined){
+      filtros.adotado = parametros.adotado === "true";
+    };
+
+    if(parametros.createdAt){
+      filtros.createdAt = parametros.createdAt;
+    };
+
+    if(parametros.updatedAt){
+      filtros.updatedAt = parametros.updatedAt;
+    };
+
+    const animais = await Animal.findAll({
+      where: filtros,
+      order: [["createdAt", "ASC"]]
+    });
+
+    res.json({
+      "data": animais,
+      "total": animais.length
+    });
+
+  }catch(error){
+    res.status(500).json({ "erro": "Erro ao buscar animais" });
+  }
+};
+
 const getAnimalById = async (req, res) => {
   try{
     const animalBuscado = await Animal.findByPk(req.params.id, { include: PedidoAdocao });
@@ -118,12 +186,12 @@ const getAnimalById = async (req, res) => {
 
 const patchAnimal = async (req, res) => {
   try{
-    const animalProcurado = Animal.findByPk(req.params.id);
+    const animalProcurado = await Animal.findByPk(req.params.id);
 
     if(!animalProcurado){
       res.status(404).json({"erro": "Animal não encontrado"});
     }else{
-      const animalAtualizado = await Animal.update({
+      const animalAtualizado = await animalProcurado.update({
         nome: req.body.nome,
         especie: req.body.especie,
         porte: req.body.porte,
@@ -131,7 +199,7 @@ const patchAnimal = async (req, res) => {
         vacinado: req.body.vacinado,
         descricao: req.body.descricao,
         foto: req.body.foto
-      });
+      })
 
       if(Object.keys(animalAtualizado)==""){
         res.status(400).json({"erro": "Nenhum campo foi fornecido para atualização"});
@@ -147,7 +215,7 @@ const patchAnimal = async (req, res) => {
 
 const delAnimal = async (req, res) => {
   try{  
-    const animalProcurado = Animal.findByPk(req.params.id);
+    const animalProcurado = await Animal.findByPk(req.params.id);
 
     if(!animalProcurado){
       res.status(404).json({"erro": "Animal não encontrado"});
@@ -162,4 +230,4 @@ const delAnimal = async (req, res) => {
 };
 
 
-export { postAnimal, getAnimais, getAnimalById, patchAnimal, delAnimal }
+export { postAnimal, getAnimais, getAnimaisAdmin, getAnimalById, patchAnimal, delAnimal }

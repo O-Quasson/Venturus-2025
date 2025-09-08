@@ -17,7 +17,7 @@ export default (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: true
         },
-        tutorId: {
+        usuarioId: {
             type: DataTypes.UUID,
             allowNull: false
         },

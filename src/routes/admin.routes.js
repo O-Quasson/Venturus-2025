@@ -5,10 +5,12 @@ import { getAnimalById, patchAnimal, delAnimal } from "../controllers/animalCont
 
 //todas as rotas de admin tem que vir aqui pq haha, funny
 
-router.get('/animais/:id', getAnimalById);
+router.get('/admin/animais/', getAnimalById);
 
-router.patch('/animais/:id', patchAnimal);
+router.get('/admin/animais/:id', getAnimalById);
 
-router.delete('/animais/:id', delAnimal);
+router.patch('/admin/animais/:id', patchAnimal);
+
+router.delete('/admin/animais/:id', delAnimal);
 
 export default router;

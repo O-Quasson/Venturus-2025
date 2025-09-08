@@ -36,7 +36,7 @@ export const Doacao = DoacaoModel(sequelize);
 Usuario.hasOne(Questionario, {foreignKey: { name: 'usuarioId', allowNull: false}, onDelete: 'CASCADE'});
 Questionario.belongsTo(Usuario, {foreignKey: 'usuarioId'});
 
-Usuario.hasMany(PedidoAdocao, { foreignKey: { name: 'UsuarioId', allowNull: false}, onDelete: 'CASCADE'});
+Usuario.hasMany(PedidoAdocao, { foreignKey: { name: 'usuarioId', allowNull: false}, onDelete: 'CASCADE'});
 PedidoAdocao.belongsTo(Usuario, { as: 'Usuario',foreignKey: 'UsuarioId'});
 
 Animal.hasMany(PedidoAdocao, { foreignKey: { name: 'animalId', allowNull: false}, onDelete: 'CASCADE'});
@@ -48,7 +48,5 @@ PedidoAdocao.belongsTo(Animal, { foreignKey: 'animalId'});
 // - Um Usuario pode ter vários Pedidos de Adoção.
 // - Um Animal pode ter vários Pedidos de Adoção.
 // A tabela PedidosAdocao serve como uma tabela de junção entre Usuarioes e Animais.
-
-await sequelize.sync();
 
 export default { connectDB, sequelize, Animal, Usuario, Questionario, PedidoAdocao, Doacao };
