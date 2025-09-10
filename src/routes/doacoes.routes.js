@@ -35,3 +35,9 @@ import postDoacao from '../controllers/doacaoControllers.js';
 //eu to no 3º andar, cara, n tem como ter alguém na janela
 //sou eu, burrão, abre a janela ae pra eu entrar
 //do you hear the whistle?
+// can you blow my whistle baby, whistle baby
+// here we go, fiu fiu fiu fiu fiu
+//nigga just stfu
+// joguem sifu deu kendy
+
+router.post('/Doacao', postDoacao);

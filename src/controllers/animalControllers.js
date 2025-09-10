@@ -1,17 +1,5 @@
 import {Animal, PedidoAdocao} from "../models/Modelos.js";
 
-//QUASE certeza que tá pronto essas rotas já
-//pergunta pro Alex depois
-//are you sure?
-//pretty sure
-//are you sure?
-//threw a trashbag
-//are you sure?
-//into space
-//are you sure?
-//at work
-//are you sure?
-
 const postAnimal = async (req, res) => {
   try {
 
@@ -77,6 +65,7 @@ const getAnimais = async (req, res) => {
       filtros.porte = parametros.porte;
     };
 
+    //!== significa se os o parâmetro for diferente em valor e/ou tipo
     if(parametros.castrado !== undefined) {
       filtros.castrado = parametros.castrado === "true"; 
     };

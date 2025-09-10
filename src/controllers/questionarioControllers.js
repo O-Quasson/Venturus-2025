@@ -3,7 +3,7 @@ import { Questionario, Usuario } from "../models/Modelos.js";
 const postQuestionario = async (req, res) => {
     try{ 
         const novoQuestionario = ({
-            usuarioID: req.body.usuarioID,
+            usuarioId: req.body.usuarioId,
             empregado: req.body.empregado,
             quantos_animais_possui: req.body.quantos_animais_possui,
             motivos_para_adotar: req.body.motivos_para_adotar,
@@ -50,15 +50,16 @@ const postQuestionario = async (req, res) => {
         });
 
         //por que não tem um res.status para usuário inexistente, bruh?
-        const usuarioExistente = await Usuario.findByPk(novoQuestionario.usuarioID);
+        const usuarioExistente = await Usuario.findByPk(novoQuestionario.usuarioId);
 
         //bro, como que faz isso não ser um if gigante? pq essa porra definitivamente não vai funcionar
+        // sla mn vai na fé
         if((Object.keys(novoQuestionario)==null)||(!usuarioExistente)||(Object.keys(novoQuestionario==undefined))){
             res.status(400)({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
         }else{
 
             const novoQuestionario = await Questionario.create({
-                usuarioID: novoQuestionario.usuarioID,
+                usuarioId: novoQuestionario.usuarioId,
                 empregado: novoQuestionario.empregado,
                 quantos_animais_possui: novoQuestionario.quantos_animais_possui,
                 motivos_para_adotar: novoQuestionario.motivos_para_adotar,

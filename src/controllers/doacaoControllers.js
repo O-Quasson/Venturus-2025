@@ -2,6 +2,7 @@ import {Doacao} from '../models/Modelos.js';
 
 //honório, termine essas rotas
 //[insira imagem dos capitão dos penguins de madagascar aqui]
+//Kowaski Analize
 const postDoacao = async (req, req) => {
     try {
     const novaDoacao = await Doacao.create({
@@ -12,27 +13,38 @@ const postDoacao = async (req, req) => {
         mensagem: req.body.mensagem
     });
 
-    res.status(201).json({
-        id: Doacao.id,
-        nome: "String",
-        email: "String",
-        valor: "Number",
-        linkpix: "String",
-        mensagem: "String"
-        /*id: Doacao.id,
-        nome: Doacao.nome,
-        email: Doacao.email,
-        valor: Doacao.valor,
-        linkpix: Doacao.linkpix,
-        mensagem: Doacao.mensagem,*/
-        //createdAt: Doacao.createdAt,
-        //updatedAt: Doacao.updatedAt
-    })
+    if((!ProvavelDoacao.valor)){
+        res.status(400).json({"erro:": "Cade meu dinheiro fela da fruta"});
+    }else{
+        const NovaDoacao = await Doacao.create({
+            valor: ProvavelDoacao.valor
+        });
+
+        res.status(201).json({
+            id: NovaDoacao.id,
+            nome: NovaDoacao.nome,
+            email: NovaDoacao.email,
+            valor: NovaDoacao.valor,
+            linkpix: NovaDoacao.linkpix,
+            mensagem: NovaDoacao.mensagem
+        })
+    }
 }
 catch (error) {
     console.error('Erro ao registrar a doação', error);
     res.status(500).json({ erro: "Erro interno ao registrar a doação." });
-}
-}
+}};
+
+/*const getDoacao = async (req, res) => {
+    try{
+        const parametros = (
+            email: req.body.email,
+            linkpix: req.body.linkpix,
+            mensagem: req.body.mensagem
+        )
+    }
+};*/
+
+// getDoacao, getDoacoesAdmin, getDoacaoById, patchDoacao, delDoacao
 export { postDoacao }
 const doacoes = await Doacao.findAll();
