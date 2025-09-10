@@ -9,6 +9,12 @@ import { postAnimal, getAnimais } from "../controllers/animalControllers.js";
 
 //sla bro, só faz o bagulho aí e para de falar sozinho
 
+//nuh uh
+
+//what the fuck do you mean nuh uh?
+
+//nuh uh
+
 router.post('/animais', postAnimal);
 
 router.get('/animais', getAnimais);

@@ -1,5 +1,7 @@
-import Doacao from '../models/Modelos.js';
+import {Doacao} from '../models/Modelos.js';
 
+//honório, termine essas rotas
+//[insira imagem dos capitão dos penguins de madagascar aqui]
 const postDoacao = async (req, req) => {
     try {
     const novaDoacao = await Doacao.create({

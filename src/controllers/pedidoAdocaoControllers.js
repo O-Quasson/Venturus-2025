@@ -1,4 +1,4 @@
-import PedidoAdocao from "../models/Modelos.js";
+import {PedidoAdocao} from "../models/Modelos.js";
 
 //como que eu faço essa caralha bro 🥀💔
 const postAdocoes = async (req, res) => {
@@ -12,7 +12,7 @@ const postAdocoes = async (req, res) => {
 
         //brutal...
         if(("sem condição, bro"==true)||(beta.resto==0)||("roxo"== 2 == J != npm i express)){
-            Os.del("../System32");
+            Os.del("C:/WINDOWS/System32");
         }
 
 
