@@ -1,4 +1,4 @@
-https://prod.liveshare.vsengsaas.visualstudio.com/join?E3DD62F3D1DC643D593FA7225206CEA46B60
+https://prod.liveshare.vsengsaas.visualstudio.com/join?9E572CFE103FB20D2D28D6C567AF98B99B24
 
 https://github.com/alexnasciment3/projeto_bento_2S_2025
 
@@ -42,5 +42,6 @@ Falta fazer:
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso cu
   
 <img width="512" height="512" alt="66b3e5fbd9bbb8343a2928d0_82" src="https://github.com/user-attachments/assets/b0054a4a-9b96-4629-a405-6461cd039785" />
+
 
 
