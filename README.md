@@ -41,4 +41,6 @@ Falta fazer:
 - apagar os comentários que o esquizofrênico do kendy escreveu (eu?)
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso cu
   
-![typing-typing-emoji](https://github.com/user-attachments/assets/f3c9f770-4ab2-473e-90ff-3f4ebef70c4e)
+<img width="512" height="512" alt="66b3e5fbd9bbb8343a2928d0_82" src="https://github.com/user-attachments/assets/b0054a4a-9b96-4629-a405-6461cd039785" />
+
+
