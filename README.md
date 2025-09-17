@@ -1,4 +1,4 @@
-https://prod.liveshare.vsengsaas.visualstudio.com/join?2B4006497E751156E771458C60DB13A1E202
+https://prod.liveshare.vsengsaas.visualstudio.com/join?E3DD62F3D1DC643D593FA7225206CEA46B60
 
 https://github.com/alexnasciment3/projeto_bento_2S_2025
 
@@ -40,3 +40,5 @@ Falta fazer:
 - deve ter algo ainda pra fazer além dissos, eu só n sei
 - apagar os comentários que o esquizofrênico do kendy escreveu (eu?)
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso cu
+  
+![typing-typing-emoji](https://github.com/user-attachments/assets/f3c9f770-4ab2-473e-90ff-3f4ebef70c4e)
