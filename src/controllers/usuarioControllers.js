@@ -1,4 +1,6 @@
 import {Usuario, Questionario } from "../models/Modelos.js";
+import omit from "lodash.omit";
+//eu tive que importar a porra de uma biblioteca só pra pegar essa caralha de omit, que merda
 
 //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 //alguém me mata, por favor
@@ -23,17 +25,17 @@ const postUsuario = async (req, res) => {
             estado: req.body.estado,
             idade: req.body.idade,
             telefone: req.body.telefone,
-            celular: req.body.celular,
+            celular: req.body.celular || '',
             cpf: req.body.cpf,
             endereco: req.body.endereco,
-            bairro: req.body.bairro,
-            cep: req.body.cep,
-            instagram: req.body.instagram,
-            facebook: req.body.facebook,
-            administrador: req.body.administrador,
+            bairro: req.body.bairro || '',
+            cep: req.body.cep || '',
+            instagram: req.body.instagram || '',
+            facebook: req.body.facebook || '',
+            questionario: req.body.questionario || null
         });
 
-        if(Object.keys(provavelUsuario)==""){
+        if((!provavelUsuario.nome_completo) || (!provavelUsuario.email) || (!provavelUsuario.senha) || (!provavelUsuario.cidade) || (!provavelUsuario.estado) || (!provavelUsuario.idade) || (!provavelUsuario.telefone) || (!provavelUsuario.cpf) || (!provavelUsuario.endereco)){
             res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
         }else{
 
@@ -60,8 +62,14 @@ const postUsuario = async (req, res) => {
                     cep: req.body.cep,
                     instagram: req.body.instagram,
                     facebook: req.body.facebook,
-                    administrador: req.body.administrador,
                 });
+
+                //placeholder, mudar depois
+                //se tiver mandado um questionario, cria um registro de questionario com o id do usuário
+                if(provavelUsuario.questionario){
+                    provavelUsuario.questionario.usuarioId = novoUsuario.id;
+                    const questionarioFeito = await Questionario.create(provavelUsuario.questionario);
+                };
 
                 res.status(201).json({
                     id: novoUsuario.id,
@@ -81,39 +89,50 @@ const postUsuario = async (req, res) => {
             
         }
     }catch (error) {
-        console.error('Erro ao cadastrar tutor:', error);
-        res.status(500).json({ erro: "Erro interno ao cadastrar o tutor." });
+        res.status(500).json({ "erro": "Erro interno ao cadastrar o tutor." });
     }
 }
 
 //a partir daqui são rotas de ADMIN, não escrevam nada além de rotas de admin aqui
-//essa porra tá incompleta pq eu n sei como continuar
-//como caralhos eu pego o questionário do filho da puta do usuário?
+
+//falta pegar questionário do usuário
 const patchUsuario = async (req, res) => {
     try{
-        const usuarioProcurado = await Usuario.findByPk(req.params.id);
+        const usuarioProcurado = await Usuario.findByPk(req.params.id, { include: Questionario });
 
         if(!usuarioProcurado){
             res.status(404).json({"erro": "Tutor não encontrado"});
         }else{
-            const usuarioAtualizado = {
-                nome_completo: req.body.nome_completo,
-                email: req.body.email,
-                senha: req.body.senha,
-                cidade: req.body.cidade,
-                estado: req.body.estado,
-                idade: req.body.idade,
-                telefone: req.body.telefone,
-                celular: req.body.celular,
-                cpf: req.body.cpf,
-                endereco: req.body.endereco,
-                bairro: req.body.bairro,
-                cep: req.body.cep,
-                instagram: req.body.instagram,
-                facebook: req.body.facebook,
-                administrador: req.body.administrador,
-            };
 
+            if(Object.keys(req.body).length<1){ 
+                res.status(400).json({"erro": "Pelo menos um campo deve ser enviado para atualização"});
+            }else{ 
+
+                //esse omit serve só pra passar o usuário atualizado sem o questionário, pq senão o questionário daria erro no código, pq n tem um campo questionário na tabela de usuário
+                const usuarioAtualizado = await usuarioProcurado.update(omit(req.body, ['questionario']));
+
+                if(req.body.questionario){
+                    if (usuarioProcurado.questionario) {
+                        await usuarioProcurado.questionario.update(req.body.questionario);
+                    }else{
+                        req.body.questionario.usuarioId = usuarioProcurado.id;
+                        await Questionario.create(req.body.questionario);
+                    }
+                }
+
+                const questionarioFeito = await Questionario.findOne({where: {
+                    usuarioId: usuarioAtualizado.id
+                }});
+
+                res.status(200).json({
+                    "id": usuarioAtualizado.id,
+                    "nome_completo": usuarioAtualizado.nome_completo,
+                    "email": usuarioAtualizado.email,
+                    "cidade": usuarioAtualizado.cidade,
+                    "estado": usuarioAtualizado.estado,
+                    "questionario": questionarioFeito
+                });
+            }   
 
         };
             
@@ -129,65 +148,7 @@ const getUsuarioById = async (req, res) => {
         if(!usuarioProcurado){
             res.status(404).json({"erro": "Tutor não encontrado"});
         }else{
-            res.status(200).json({
-              "id": "uuid",
-              "nome_completo": "string",
-              "rg": "string",
-              "endereco": "string",
-              "bairro": "string",
-              "cidade": "string",
-              "estado": "string",
-              "celular": "string",
-              "telefone": "string",
-              "email": "string",
-              "instagram": "string",
-              "facebook": "string",
-              "questionario": {
-                "empregado": true,
-                "quantos_animais_possui": 2,
-                "motivos_para_adotar": "string",
-                "quem_vai_sustentar_o_animal": "string",
-                "numero_adultos_na_casa": 2,
-                "numero_criancas_na_casa": 1,
-                "idades_criancas": \["5"\],
-                "residencia_tipo": "própria",
-                "proprietario_permite_animais": true,
-                "todos_de_acordo_com_adocao": true,
-                "responsavel_pelo_animal": "string",
-                "responsavel_concorda_com_adocao": true,
-                "ha_alergico_ou_pessoas_que_nao_gostam": false,
-                "gasto_mensal_estimado": 300,
-                "valor_disponivel_no_orcamento": true,
-                "tipo_alimentacao": "rações premium",
-                "local_que_o_animal_vai_ficar": "quintal",
-                "forma_de_permanencia": "solto 24h",
-                "forma_de_confinamento": "nenhum",
-                "tera_brinquedos": true,
-                "tera_abrigo": true,
-                "tera_passeios_acompanhado": true,
-                "tera_passeios_sozinho": false,
-                "companhia_outro_animal": true,
-                "companhia_humana_24h": true,
-                "companhia_humana_parcial": false,
-                "sem_companhia_humana": false,
-                "sem_companhia_animal": false,
-                "o_que_faz_em_viagem": "deixa com parente",
-                "o_que_faz_se_fugir": "procura imediatamente",
-                "o_que_faz_se_nao_puder_criar": "procura nova família",
-                "animais_que_ja_criou": "2 cães, 1 gato",
-                "destino_animais_anteriores": "todos faleceram de velhice",
-                "costuma_esterilizar": true,
-                "costuma_vacinar": true,
-                "costuma_vermifugar": true,
-                "veterinario_usual": "Clínica PetVida",
-                "forma_de_educar": "reforço positivo",
-                "envia_fotos_e_videos_do_local": true,
-                "aceita_visitas_e_fotos_do_animal": true,
-                "topa_entrar_grupo_adotantes": true,
-                "concorda_com_taxa_adocao": true,
-                "data_disponivel_para_buscar_animal": "2024-12-20"
-                }
-            })
+            res.status(200).json(usuarioProcurado);
         };
 
     }catch(error){

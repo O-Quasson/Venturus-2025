@@ -1,23 +1,24 @@
 import { PedidoAdocao, Usuario, Animal, Questionario } from "../models/Modelos.js";
 
+//tá errado isso daqui, não?
+//se eu n me engano um usuário pode ter vários pedidos em análise, ent n faz sentido pegar só o PedidoAdocao.findOne
+//nathan, arruma essa porra, arrombado
 const postAdocoes = async (req, res) => {
     try {
         const { tutorId, animalId } = req.body;
 
-        if (!tutorId || !animalId) {
-            res.status(400).json({ erro: "tutorId e animalId são obrigatórios." });
-        }
-
+        if (!tutorId || !animalId) return res.status(400).json({ "erro": "tutorId e animalId são obrigatórios." });
+    
         const tutor = await Usuario.findByPk(tutorId);
         const animal = await Animal.findByPk(animalId);
 
         if (!tutor || !animal) {
-            res.status(404).json({ erro: "Tutor ou animal não encontrado" });
+            res.status(404).json({ "erro": "Tutor ou animal não encontrado" });
         }
 
         const questionario = await Questionario.findOne({ where: { usuarioId: tutorId } });
         if (!questionario) {
-            res.status(400).json({ erro: "O tutor ainda não respondeu o questionário obrigatório" });
+            res.status(400).json({ "erro": "O tutor ainda não respondeu o questionário obrigatório" });
         }
 
         const pedidoExistente = await PedidoAdocao.findOne({

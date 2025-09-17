@@ -9,11 +9,11 @@ const postAnimal = async (req, res) => {
       porte: req.body.porte,
       castrado: req.body.castrado || false,
       vacinado: req.body.vacinado || false,
-      descricao: req.body.descricao || '',
-      foto: req.body.foto || null
+      descricao: req.body.descricao,
+      foto: req.body.foto
     });
     
-    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)){
+    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)||(!provavelAnimal.foto)){
       res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
     }else{
       const novoAnimal = await Animal.create({
@@ -40,8 +40,7 @@ const postAnimal = async (req, res) => {
     }
 
   } catch (error) {
-    console.error('Erro ao cadastrar animal:', error);
-    res.status(500).json({ erro: "Erro interno ao cadastrar o animal." });
+    res.status(500).json({ "erro": "Erro interno ao cadastrar o animal." });
   }
 };
 
@@ -49,10 +48,10 @@ const postAnimal = async (req, res) => {
 const getAnimais = async (req, res) => {
   try{
     const parametros = { 
-      especie: req.body.especie, 
-      porte: req.body.porte, 
-      castrado: req.body.castrado, 
-      vacinado: req.body.vacinado 
+      especie: req.query.especie, 
+      porte: req.query.porte, 
+      castrado: req.query.castrado, 
+      vacinado: req.query.vacinado 
     };
 
     let filtros = {};
@@ -65,6 +64,7 @@ const getAnimais = async (req, res) => {
       filtros.porte = parametros.porte;
     };
 
+    //=== significa se o parâmetro for igual em valor E tipo
     //!== significa se os o parâmetro for diferente em valor e/ou tipo
     if(parametros.castrado !== undefined) {
       filtros.castrado = parametros.castrado === "true"; 
@@ -90,19 +90,20 @@ const getAnimais = async (req, res) => {
 };
 
 //rota de admin a partir daqui
+//ainda tem que colocar proteção nelas
 
 const getAnimaisAdmin = async (req, res) => {
   try{
     const parametros = { 
-      id: req.body.id,
-      nome: req.body.nome,
-      especie: req.body.especie, 
-      porte: req.body.porte, 
-      castrado: req.body.castrado, 
-      vacinado: req.body.vacinado,
-      adotado: req.body.adotado,
-      createdAt: req.body.createdAt,
-      updatedAt: req.body.updatedAt
+      id: req.query.id,
+      nome: req.query.nome,
+      especie: req.query.especie, 
+      porte: req.query.porte, 
+      castrado: req.query.castrado, 
+      vacinado: req.query.vacinado,
+      adotado: req.query.adotado,
+      createdAt: req.query.createdAt,
+      updatedAt: req.query.updatedAt
     };
 
     let filtros = {};
@@ -143,8 +144,14 @@ const getAnimaisAdmin = async (req, res) => {
       filtros.updatedAt = parametros.updatedAt;
     };
 
+    //usa os filtros, pega os pedidos de adoção de cada bicho junto das informações deles e ordena por ordem do mais antigo até o mais novo
     const animais = await Animal.findAll({
       where: filtros,
+      include: {
+        model: PedidoAdocao,
+        attributes: ['id', 'tutor_id', 'status', 'posicao_fila'],
+        order: [['createdAT', 'ASC']]
+      },
       order: [["createdAt", "ASC"]]
     });
 
@@ -160,7 +167,11 @@ const getAnimaisAdmin = async (req, res) => {
 
 const getAnimalById = async (req, res) => {
   try{
-    const animalBuscado = await Animal.findByPk(req.params.id, { include: PedidoAdocao });
+    const animalBuscado = await Animal.findByPk(req.params.id, { include: {
+      model: PedidoAdocao,
+      attributes: ['id', 'tutor_id', 'status', 'posicao_fila', 'createdAt'],
+      order: [['createdAt', 'ASC']]
+    }});
 
     if(!animalBuscado){
       res.status(404).json({"erro": "Animal não encontrado"});
@@ -190,7 +201,7 @@ const patchAnimal = async (req, res) => {
         foto: req.body.foto
       })
 
-      if(Object.keys(animalAtualizado)==""){
+      if(Object.keys(req.body).length<1){ 
         res.status(400).json({"erro": "Nenhum campo foi fornecido para atualização"});
       }else{
         res.status(200).json(animalAtualizado);
@@ -202,6 +213,8 @@ const patchAnimal = async (req, res) => {
   }
 };
 
+//falta colocar autenticação aqui
+//res.status(403).json({"erro": "Acesso não autorizado"})
 const delAnimal = async (req, res) => {
   try{  
     const animalProcurado = await Animal.findByPk(req.params.id);

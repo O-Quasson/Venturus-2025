@@ -3,48 +3,36 @@ import {Doacao} from '../models/Modelos.js';
 //honório, termine essas rotas
 //[insira imagem dos capitão dos penguins de madagascar aqui]
 //Kowaski Analize
-const postDoacao = async (req, req) => {
+
+
+//tem que terminar isso daqui
+const postDoacao = async (req, res) => {
     try {
-    const novaDoacao = await Doacao.create({
-        nome: req.body.nome,
-        email: req.body.email,
-        valor: req.body.valor,
-        linkpix: req.body.linkpix,
-        mensagem: req.body.mensagem
-    });
+        const ProvavelDoacao = {
+            nome: req.body.nome || 'Anônimo',
+            email: req.body.email || 'Anônimo',
+            valor: req.body.valor,
+            linkpix: req.body.linkpix || '',
+            mensagem: req.body.mensagem || ''
+        };
 
-    if((!ProvavelDoacao.valor)){
-        res.status(400).json({"erro:": "Cade meu dinheiro fela da fruta"});
-    }else{
-        const NovaDoacao = await Doacao.create({
-            valor: ProvavelDoacao.valor
-        });
+        if((!ProvavelDoacao.valor)||(ProvavelDoacao.valor<=0)){
+            res.status(400).json({"erro": "Valor da doação é obrigatório e deve ser um número positivo"});
+        }else{
+            const NovaDoacao = await Doacao.create(ProvavelDoacao);
 
-        res.status(201).json({
-            id: NovaDoacao.id,
-            nome: NovaDoacao.nome,
-            email: NovaDoacao.email,
-            valor: NovaDoacao.valor,
-            linkpix: NovaDoacao.linkpix,
-            mensagem: NovaDoacao.mensagem
-        })
+            res.status(201).json({
+                "doacao_id": NovaDoacao.id,
+                nome: NovaDoacao.nome,
+                valor: NovaDoacao.valor,
+                linkpix: NovaDoacao.linkpix,
+                //uhhhh... como que a gente coloca qr code aqui?????????
+            })
+        };
+    }catch (error) {
+        res.status(500).json({ "erro": "Erro ao processar a doação." });
     }
-}
-catch (error) {
-    console.error('Erro ao registrar a doação', error);
-    res.status(500).json({ erro: "Erro interno ao registrar a doação." });
-}};
+};
 
-/*const getDoacao = async (req, res) => {
-    try{
-        const parametros = (
-            email: req.body.email,
-            linkpix: req.body.linkpix,
-            mensagem: req.body.mensagem
-        )
-    }
-};*/
 
-// getDoacao, getDoacoesAdmin, getDoacaoById, patchDoacao, delDoacao
 export { postDoacao }
-const doacoes = await Doacao.findAll();
