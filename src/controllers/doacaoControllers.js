@@ -1,11 +1,8 @@
 import {Doacao} from '../models/Modelos.js';
 
-//honório, termine essas rotas
 //[insira imagem dos capitão dos penguins de madagascar aqui]
 //Kowaski Analize
 
-
-//tem que terminar isso daqui
 const postDoacao = async (req, res) => {
     try {
         const ProvavelDoacao = {

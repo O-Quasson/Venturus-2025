@@ -1,8 +1,7 @@
 import { PedidoAdocao, Usuario, Animal, Questionario } from "../models/Modelos.js";
 
-//tá errado isso daqui, não?
 //se eu n me engano um usuário pode ter vários pedidos em análise, ent n faz sentido pegar só o PedidoAdocao.findOne
-//foi o bragante que fez
+
 const postAdocoes = async (req, res) => {
     try {
         const { usuarioEncontrado, animais} = req.body;
@@ -10,10 +9,12 @@ const postAdocoes = async (req, res) => {
         const tutor = await Usuario.findByPk(usuarioEncontrado);
         const animal = await Animal.findByPk(animais);
 
+        //sem tutor ou animal da erro
         if (!tutor || !animal) {
             res.status(404).json({ "erro": "Tutor ou animal não encontrado" });
         }
 
+        //sem responder o questionario da erro
         const questionario = await Questionario.findAll({ where: { usuarioId: usuarioEncontrado } });
         if (!questionario) {
             res.status(400).json({ "erro": "O tutor ainda não respondeu o questionário obrigatório" });
@@ -27,6 +28,7 @@ const postAdocoes = async (req, res) => {
             }
         });
 
+
         if (pedidoExistente) {
             res.status(409).json({ erro: "Este tutor já tem um pedido de adoção para este animal" });
         }
@@ -39,7 +41,7 @@ const postAdocoes = async (req, res) => {
             usuarioEncontrado,
             animais,
             status: 'em_analise',
-            posicao_fila: count + 1
+            posicao_fila: count + 1,
         });
 
         res.status(201).json({
@@ -48,7 +50,7 @@ const postAdocoes = async (req, res) => {
             animal_id: novoPedido.animais,
             status: novoPedido.status,
             posicao_fila: novoPedido.posicao_fila,
-            criado_em: novoPedido.createdAt
+            createdAt: novoPedido.createdAt
         });
 
     }catch(error){

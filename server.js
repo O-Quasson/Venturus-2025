@@ -18,8 +18,3 @@ connectDB();
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
-
-//daisy daisy
-//give me your answer do
-//im half crazy
-//all for the love of you

@@ -5,8 +5,6 @@ import QuestionarioModel from './Questionario.js';
 import PedidoAdocaoModel from './PedidoAdocao.js';
 import DoacaoModel from './Doacao.js';
 
-// WHERE IS TUTORMODEL? WHERE IS IT?
-// *dies like a fraud*
 
 export const sequelize = new Sequelize({
     dialect: 'sqlite',

@@ -1,4 +1,4 @@
-https://prod.liveshare.vsengsaas.visualstudio.com/join?696E5712BF278FE8C6CC26569B4E716A83F6
+https://prod.liveshare.vsengsaas.visualstudio.com/join?2B4006497E751156E771458C60DB13A1E202
 
 https://github.com/alexnasciment3/projeto_bento_2S_2025
 
@@ -37,7 +37,6 @@ Falta fazer:
 - criação de link pix em postdoacao
 - adicionar maneira de criar qrcode
 - REVISAR TUDO, ISSO É DEVERAS IMPORTANTE. IMPORTANTE TIPO, PRA CACETARALHOS
-- deve ter algo ainda pra fazer além dissos, eu só n sei
+- deve ter algo ainda pra fazer além dissos("disso" seu burro), eu só n sei
 - apagar os comentários que o esquizofrênico do kendy escreveu (eu?)
-
-- fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso cu
+- fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso [hyperlink blocked]

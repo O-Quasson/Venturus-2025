@@ -1,19 +1,20 @@
+import encryptjs from "encryptjs";
 import {Usuario, Questionario } from "../models/Modelos.js";
 import omit from "lodash.omit";
-//eu tive que importar a porra de uma biblioteca só pra pegar essa caralha de omit, que merda
 
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-//alguém me mata, por favor
-//ok google, faça esse trabalho para mim, eu imploro por favor
+const secreta = "euroubeiocodigodocastaway"; //chave segura
 
-//essa rota tá errada, algm arruma 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭
-// eu nao fiz nadaaaaaa e eu tomei no aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// sla como faz isso bro
-// cara é só fazer, bruh
-// então faz vc otário
-// blz, vou fazer aqui seu buxa
-// buxa é vc
-// tua mãe é minha cala a boca
+//função para criptografar
+const criptografarSenha = (senha) => {
+    const senhaCriptografada = encryptjs.encrypt(senha, secreta, 256);
+    return senhaCriptografada;
+};
+
+const descriptografarSenha = (senhaCriptografada) => {
+    const senhaDescriptografada = encryptjs.decrypt(senhaCriptografada, secreta, 256);
+    return senhaDescriptografada;
+};
+
 //*Descrição*: Cadastra um novo usuario com seus dados. O questionário pode ou não ser enviado junto ao cadastro do usuário.
 const postUsuario = async (req, res) => {
     try{
@@ -34,7 +35,7 @@ const postUsuario = async (req, res) => {
             facebook: req.body.facebook || '',
             questionario: req.body.questionario || null
         });
-
+/*...*/
         if((!provavelUsuario.nome_completo) || (!provavelUsuario.email) || (!provavelUsuario.senha) || (!provavelUsuario.cidade) || (!provavelUsuario.estado) || (!provavelUsuario.idade) || (!provavelUsuario.telefone) || (!provavelUsuario.cpf) || (!provavelUsuario.endereco)){
             res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
         }else{
@@ -46,11 +47,12 @@ const postUsuario = async (req, res) => {
             });
 
             if(!emailExiste){
+                const senhaCriptografada = criptografarSenha(req.body.senha);
 
                 const novoUsuario = await Usuario.create({
                     nome_completo: req.body.nome_completo,
                     email: req.body.email,
-                    senha: req.body.senha,
+                    senha: senhaCriptografada,
                     cidade: req.body.cidade,
                     estado: req.body.estado,
                     idade: req.body.idade,
@@ -61,6 +63,7 @@ const postUsuario = async (req, res) => {
                     bairro: req.body.bairro,
                     cep: req.body.cep,
                     instagram: req.body.instagram,
+/*...*/
                     facebook: req.body.facebook,
                 });
 
@@ -89,7 +92,37 @@ const postUsuario = async (req, res) => {
             
         }
     }catch (error) {
+        console.log(error)
         res.status(500).json({ "erro": "Erro interno ao cadastrar o tutor." });
+    }
+}
+
+const postLogin = async (req, res) => {
+    try{
+/*...*/
+        const usuarioAutenticado = {
+            email: req.body.email,
+            senha: req.body.senha
+        };
+
+        const procuraUsuario = await Usuario.findOne({ where: {
+            email: usuarioAutenticado.email
+        }});
+        
+        if(!procuraUsuario){
+            res.status(401).json({"erro": "Email ou senha inválidos."});
+        }else{
+            const senhaDescriptografada = descriptografarSenha(procuraUsuario.senha);
+            if(usuarioAutenticado.senha!=senhaDescriptografada){
+                res.status(401).json({"erro": "Email ou senha inválidos."});
+            }else{
+                res.status(200).json({"message": "Login realizado com sucesso."});
+            }
+            
+        }
+
+    }catch(error){
+        res.status(500).json({"erro": "Erro interno ao tentar fazer o login."})
     }
 }
 
@@ -104,10 +137,13 @@ const patchUsuario = async (req, res) => {
             res.status(404).json({"erro": "Tutor não encontrado"});
         }else{
 
-            if(Object.keys(req.body).length<1){ 
+            if(Object.keys(req.body).length<1){
+/*...*/
                 res.status(400).json({"erro": "Pelo menos um campo deve ser enviado para atualização"});
             }else{ 
-
+                if (req.body.senha) {
+                    req.body.senha = criptografarSenha(req.body.senha);
+                }
                 //esse omit serve só pra passar o usuário atualizado sem o questionário, pq senão o questionário daria erro no código, pq n tem um campo questionário na tabela de usuário
                 const usuarioAtualizado = await usuarioProcurado.update(omit(req.body, ['questionario']));
 
@@ -130,6 +166,7 @@ const patchUsuario = async (req, res) => {
                     "email": usuarioAtualizado.email,
                     "cidade": usuarioAtualizado.cidade,
                     "estado": usuarioAtualizado.estado,
+/*...*/
                     "questionario": questionarioFeito
                 });
             }   
@@ -156,4 +193,4 @@ const getUsuarioById = async (req, res) => {
     }
 };
 
-export { postUsuario, getUsuarioById, patchUsuario  }
+export { postUsuario, getUsuarioById, patchUsuario, postLogin  }

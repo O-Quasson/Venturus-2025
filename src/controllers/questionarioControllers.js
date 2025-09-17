@@ -156,9 +156,7 @@ const postQuestionario = async (req, res) => {
         }
 
     }catch(error){
-        //sim, eu tirei essa resposta do meu cu, já que não tinha um res.status(500) no github
         //boa 
-        //sybau 💔🥀
         res.status(500).json({"erro": "Erro interno ao responder o questionário"})
     };
 };

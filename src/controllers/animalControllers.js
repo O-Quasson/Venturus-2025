@@ -149,8 +149,8 @@ const getAnimaisAdmin = async (req, res) => {
       where: filtros,
       include: {
         model: PedidoAdocao,
-        attributes: ['id', 'tutor_id', 'status', 'posicao_fila'],
-        order: [['createdAT', 'ASC']]
+        attributes: ['id', 'tutorId', 'status', 'posicao_fila'],
+        order: [['createdAt', 'ASC']]
       },
       order: [["createdAt", "ASC"]]
     });
@@ -161,6 +161,7 @@ const getAnimaisAdmin = async (req, res) => {
     });
 
   }catch(error){
+    console.log(error)
     res.status(500).json({ "erro": "Erro ao buscar animais" });
   }
 };
