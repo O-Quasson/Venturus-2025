@@ -63,7 +63,6 @@ const postUsuario = async (req, res) => {
                     bairro: req.body.bairro,
                     cep: req.body.cep,
                     instagram: req.body.instagram,
-/*...*/
                     facebook: req.body.facebook,
                 });
 
@@ -189,6 +188,7 @@ const getUsuarioById = async (req, res) => {
         };
 
     }catch(error){
+        console.log(error)
         res.status(500).json({"erro": "Erro ao buscar dados do tutor"});
     }
 };

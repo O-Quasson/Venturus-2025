@@ -1,4 +1,6 @@
 import {Animal, PedidoAdocao} from "../models/Modelos.js";
+import { Op } from 'sequelize';
+//esse op é um coiso do sequelize que permite a manipulação de datastamps (data, tempo, etc, sei lá como vocês chamam isso)
 
 const postAnimal = async (req, res) => {
   try {
@@ -10,6 +12,8 @@ const postAnimal = async (req, res) => {
       castrado: req.body.castrado || false,
       vacinado: req.body.vacinado || false,
       descricao: req.body.descricao,
+      //uhhhh eu ACHO que não é assim que se requisita uma imagem
+      //isso sequer funciona?
       foto: req.body.foto
     });
     
@@ -23,7 +27,7 @@ const postAnimal = async (req, res) => {
         castrado: provavelAnimal.castrado || false,
         vacinado: provavelAnimal.vacinado || false,
         descricao: provavelAnimal.descricao,
-        foto: provavelAnimal.foto || null
+        foto: provavelAnimal.foto
       });
 
       res.status(201).json({
@@ -136,12 +140,28 @@ const getAnimaisAdmin = async (req, res) => {
       filtros.adotado = parametros.adotado === "true";
     };
 
+    //dá pra pedir a data só como Ano-Mes-Dia, sem precisar de horário
     if(parametros.createdAt){
-      filtros.createdAt = parametros.createdAt;
+        const dataInicio = new Date(parametros.createdAt);
+        const dataFim = new Date(parametros.createdAt);
+        dataFim.setHours(23, 59, 59, 999);
+
+        filtros.createdAt = {
+          [Op.between]: [dataInicio, dataFim]
+        };
     };
 
+    //dica de teste de campo que eu descobri agr: 
+    //se o campo updatedAt for 2025-09-19 01:58:31.914 +00:00
+    //é só usar 2025-09-19T01:58:31.914Z (tem que tirar os espaços (substituir por T, por algum motivo))
     if(parametros.updatedAt){
-      filtros.updatedAt = parametros.updatedAt;
+        const dataInicio = new Date(parametros.updatedAt);
+        const dataFim = new Date(parametros.updatedAt);
+        dataFim.setHours(23, 59, 59, 999);
+
+        filtros.updatedAt = {
+          [Op.between]: [dataInicio, dataFim]
+        };
     };
 
     //usa os filtros, pega os pedidos de adoção de cada bicho junto das informações deles e ordena por ordem do mais antigo até o mais novo
@@ -149,7 +169,7 @@ const getAnimaisAdmin = async (req, res) => {
       where: filtros,
       include: {
         model: PedidoAdocao,
-        attributes: ['id', 'tutorId', 'status', 'posicao_fila'],
+        attributes: ['id', 'usuarioId', 'status', 'posicao_fila'],
         order: [['createdAt', 'ASC']]
       },
       order: [["createdAt", "ASC"]]
@@ -170,7 +190,7 @@ const getAnimalById = async (req, res) => {
   try{
     const animalBuscado = await Animal.findByPk(req.params.id, { include: {
       model: PedidoAdocao,
-      attributes: ['id', 'tutor_id', 'status', 'posicao_fila', 'createdAt'],
+      attributes: ['id', 'usuarioId', 'status', 'posicao_fila', 'createdAt'],
       order: [['createdAt', 'ASC']]
     }});
 
@@ -181,6 +201,7 @@ const getAnimalById = async (req, res) => {
     }
 
   }catch(error){
+    console.log(error)
     res.status(500).json({"erro": "Erro ao procurar o animal"});
   }
 };
@@ -210,6 +231,7 @@ const patchAnimal = async (req, res) => {
 
     }
   }catch(error){
+    console.log(error)
     res.status(500).json({"erro": "Erro interno ao atualizar animal"});
   }
 };

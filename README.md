@@ -26,6 +26,7 @@ Bibliotecas utilizadas:
 
 Falta fazer: 
 
+- aprender a salvar imagem
 - proteger rotas getAnimaisAdmin, getAnimalById, patchAnimal e DelAnimal
 - colocar verificação de admin em DelAnimal (reforçando pq a gente vai provavelmente esquecer)
 - Proteger as rotas de admin

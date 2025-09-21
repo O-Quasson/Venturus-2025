@@ -1,0 +1,80 @@
+postAnimal
+
+- 201 Sucesso (funciona)
+- 400 dados obrigatórios faltando (funciona)
+- 500 erro interno (deve funcionar)
+
+postUsuario
+
+- 201 Sucesso (funciona)
+- 400 dados obrigatórios faltando (funciona)
+- 400 email já cadastrado (bônus: cpf também é chave única, mas não tem res.status pra isso)
+- 500 erro interno (funciona)
+
+postQuestionario
+
+- 201 Sucesso (funciona)
+- 400 campo obrigatórios faltando (funciona)
+- 500 Erro intero (bônus: n tem no projeto)
+
+getAnimais
+
+- 201 Sucesso (funciona)
+- 500 erro interno (talvez funciona)
+
+postAdocoes
+
+- 201 Sucesso (funciona)
+- 400 tutor não respondeu questionário (funciona)
+- 404 tutor não encontrado (funciona)
+- 409 tutor já tem pedido para animal especificado (funciona)
+- 500 erro interno (funciona) (pra caralho) (até demais) (vtmnc essa porra não para de dar erro)
+
+patchUsuario
+
+- 200 Sucesso (funciona)
+- 400 nenhum campo enviado para atualizar (funciona)
+- 404 usuario não encontrado (funciona)
+- 500 erro interno (funciona)
+
+getAnimaisAdmin
+
+- 200 Sucesso (funciona)
+- 500 erro interno (funciona)
+
+patchAnimal
+
+- 200 Sucesso (funciona)
+- 400 nenhum campo enviado para atualizar (funciona)
+- 404 animal não encontrado (funciona)
+- 500 erro interno de servidor (funciona, provavelmente)
+
+getUsuarioById
+
+- 200 Sucesso (sucesso)
+- 404 usuario não encontrado (sucesso)
+- 500 erro interno (deve ser sucesso, não deu erro ainda) (na real, nem faz sentido eu estar testando status 500)
+
+delAnimal 
+
+- 204 Sucesso (sucesso)
+- 404 animal não encontrado (sucesso)
+- 403 acesso não autorizado (INCOMPLETOOOOOOOOOOOOOOOOOOOOO)
+- 500 erro interno (idk bruh ask chagpt 💔🥀)
+
+getAnimalById
+
+- 200 Sucesso (sucesso)
+- 404 animal não encontrado (sucesso)
+
+postAutenticacao
+
+- 200 Sucesso
+- 401 email ou senha inválidos
+- 500 erro interno de servidor
+
+postDoacoes
+
+- 201 Sucesso
+- 400 valor ausente ou menor que 0
+- 500 erro interno

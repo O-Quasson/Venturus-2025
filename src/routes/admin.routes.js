@@ -13,6 +13,7 @@ router.get('/admin/animais/:id', getAnimalById);
 router.patch('/admin/animais/:id', patchAnimal);
 
 router.delete('/admin/animais/:id', delAnimal);
+
 //---------------------------------------
 
 router.get('/admin/usuario/:id', getUsuarioById);

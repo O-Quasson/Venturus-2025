@@ -35,7 +35,7 @@ Usuario.hasOne(Questionario, {foreignKey: { name: 'usuarioId', allowNull: false}
 Questionario.belongsTo(Usuario, {foreignKey: 'usuarioId'});
 
 Usuario.hasMany(PedidoAdocao, { foreignKey: { name: 'usuarioId', allowNull: false}, onDelete: 'CASCADE'});
-PedidoAdocao.belongsTo(Usuario, { as: 'Usuario',foreignKey: 'UsuarioId'});
+PedidoAdocao.belongsTo(Usuario, { as: 'Usuario', foreignKey: 'usuarioId'});
 
 Animal.hasMany(PedidoAdocao, { foreignKey: { name: 'animalId', allowNull: false}, onDelete: 'CASCADE'});
 PedidoAdocao.belongsTo(Animal, { foreignKey: 'animalId'});

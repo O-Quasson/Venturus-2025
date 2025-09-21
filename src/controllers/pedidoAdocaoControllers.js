@@ -4,80 +4,65 @@ import { PedidoAdocao, Usuario, Animal, Questionario } from "../models/Modelos.j
 
 const postAdocoes = async (req, res) => {
     try {
-        const { usuarioEncontrado, animais} = req.body;
+        const coisas = { 
+            usuarioProcurado: req.body.usuarioProcurado, 
+            animalProcurado: req.body.animalProcurado 
+        };
     
-        const tutor = await Usuario.findByPk(usuarioEncontrado);
-        const animal = await Animal.findByPk(animais);
+        const usuarioEncontrado = await Usuario.findByPk(coisas.usuarioProcurado);
+        const animalEncontrado = await Animal.findByPk(coisas.animalProcurado);
 
-        //sem tutor ou animal da erro
-        if (!tutor || !animal) {
-            res.status(404).json({ "erro": "Tutor ou animal não encontrado" });
-        }
+        //sem usuarioEncontrado ou animal da erro
+        if (!usuarioEncontrado || !animalEncontrado) {
+            res.status(404).json({ "erro": "tutor ou animal não encontrado" });
+        }else{
 
-        //sem responder o questionario da erro
-        const questionario = await Questionario.findAll({ where: { usuarioId: usuarioEncontrado } });
-        if (!questionario) {
-            res.status(400).json({ "erro": "O tutor ainda não respondeu o questionário obrigatório" });
-        }
+            //sem responder o questionario da erro
+            const questionario = await Questionario.findOne({ where: { usuarioId: usuarioEncontrado.id } });
 
-        const pedidoExistente = await PedidoAdocao.findAll({
-            where: {
-                usuarioEncontrado,
-                animais,
-                status: 'em_analise'
+            if (!questionario) {
+                res.status(400).json({ "erro": "O tutor ainda não respondeu o questionário obrigatório" });
+            }else{
+
+                const pedidoExistente = await PedidoAdocao.findOne({
+                    where: {
+                        usuarioId: usuarioEncontrado.id,
+                        animalId: animalEncontrado.id,
+                        status: 'em_analise'
+                    }
+                });
+
+                if (pedidoExistente) {
+                    res.status(409).json({ "erro": "Este tutor já tem um pedido de adoção para este animal" });
+                }else{
+
+                    const count = await PedidoAdocao.count({
+                        where: { animalId:animalEncontrado.id, status: 'em_analise' }
+                    });
+
+                    const novoPedido = await PedidoAdocao.create({
+                        usuarioId: usuarioEncontrado.id,
+                        animalId: animalEncontrado.id,
+                        status: 'em_analise',
+                        posicao_fila: count + 1,
+                    });
+
+                    res.status(201).json({
+                        id: novoPedido.id,
+                        usuarioId: novoPedido.usuarioId,
+                        animalId: novoPedido.animalId,
+                        status: novoPedido.status,
+                        posicao_fila: novoPedido.posicao_fila,
+                        createdAt: novoPedido.createdAt
+                    });
+                }
             }
-        });
-
-
-        if (pedidoExistente) {
-            res.status(409).json({ erro: "Este tutor já tem um pedido de adoção para este animal" });
         }
-
-        const count = await PedidoAdocao.count({
-            where: { animais, status: 'em_analise' }
-        });
-
-        const novoPedido = await PedidoAdocao.create({
-            usuarioEncontrado,
-            animais,
-            status: 'em_analise',
-            posicao_fila: count + 1,
-        });
-
-        res.status(201).json({
-            id: novoPedido.id,
-            tutor_id: novoPedido.usuarioEncontrado,
-            animal_id: novoPedido.animais,
-            status: novoPedido.status,
-            posicao_fila: novoPedido.posicao_fila,
-            createdAt: novoPedido.createdAt
-        });
 
     }catch(error){
+        console.log(error)
         res.status(500).json({ "erro": "Erro ao registrar o pedido de adoção" });
     };
 };
-
-const getAdocoes = async (req, res) => {
-    try{
-        const usuarioProcurado = await Usuario.findByPk(req.params.id);
-
-        if(!usuarioProcurado){
-            res.status(404).json({"erro": "Usuário procurado não encontrado"})
-        }else{
-            const adocoes = await PedidoAdocao.findAll({ 
-                where: {
-                    usuarioId: usuarioProcurado.id,
-                },
-                order: [['createdAt', 'ASC']]
-            })
-        };
-
-    }catch(error){
-        res.status(500).json({"erro": "Erro interno ao buscar animais"});
-    };
-};
-
-
 
 export { postAdocoes };
