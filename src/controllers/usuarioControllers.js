@@ -184,6 +184,7 @@ const getUsuarioById = async (req, res) => {
         if(!usuarioProcurado){
             res.status(404).json({"erro": "Tutor não encontrado"});
         }else{
+            usuarioProcurado.senha= descriptografarSenha(usuarioProcurado.senha)
             res.status(200).json(usuarioProcurado);
         };
 

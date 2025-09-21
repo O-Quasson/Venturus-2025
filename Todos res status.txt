@@ -8,14 +8,14 @@ postUsuario
 
 - 201 Sucesso (funciona)
 - 400 dados obrigatórios faltando (funciona)
-- 400 email já cadastrado (bônus: cpf também é chave única, mas não tem res.status pra isso)
+- 400 email já cadastrado (funciona) (bônus: cpf também é chave única, mas não tem res.status pra isso)
 - 500 erro interno (funciona)
 
 postQuestionario
 
 - 201 Sucesso (funciona)
 - 400 campo obrigatórios faltando (funciona)
-- 500 Erro intero (bônus: n tem no projeto)
+- 500 Erro interno (bônus: n tem no projeto)
 
 getAnimais
 
@@ -69,12 +69,12 @@ getAnimalById
 
 postAutenticacao
 
-- 200 Sucesso
-- 401 email ou senha inválidos
-- 500 erro interno de servidor
+- 200 Sucesso (sucesso)
+- 401 email ou senha inválidos (sucesso)
+- 500 erro interno de servidor (sucesso)
 
 postDoacoes
 
-- 201 Sucesso
-- 400 valor ausente ou menor que 0
-- 500 erro interno
+- 201 Sucesso (sucesso) (depois de muitos erros)
+- 400 valor ausente ou menor que 0 (sucesso)
+- 500 erro interno (sucesso)

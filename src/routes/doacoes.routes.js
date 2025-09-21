@@ -6,5 +6,6 @@ import postDoacao from '../controllers/doacaoControllers.js';
 // can you blow my whistle baby, whistle baby
 // here we go, fiu fiu fiu fiu fiu
 
+router.post('/doacao', postDoacao);
 
-router.post('/Doacao', postDoacao);
+export default router;
