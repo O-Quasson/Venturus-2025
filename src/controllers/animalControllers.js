@@ -9,15 +9,18 @@ const postAnimal = async (req, res) => {
       nome: req.body.nome,
       especie: req.body.especie,
       porte: req.body.porte,
-      castrado: req.body.castrado || false,
-      vacinado: req.body.vacinado || false,
+      //cara, pq caralhos os campos castrado e vacinado não podem ser vazios? Tipo, e se o cachorro for da rua e eu não souber? Banco de dados todo errado
+      castrado: req.body.castrado,
+      vacinado: req.body.vacinado,
       descricao: req.body.descricao,
       //uhhhh eu ACHO que não é assim que se requisita uma imagem
       //isso sequer funciona?
-      foto: req.body.foto
+      foto: req.body.foto || ''
     });
     
-    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)||(!provavelAnimal.foto)){
+    //TEM A PORRA DE UM CAMPO PRA 'ADOTADO' (n coloquei no if ainda)
+    //PRA QUE CARALHOS TU VAI CADASTRAR UM ANIMAL QUE JÁ FOI ADOTADO, PORRA
+    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)||(!provavelAnimal.castrado)||(!provavelAnimal.vacinado)){
       res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
     }else{
       const novoAnimal = await Animal.create({

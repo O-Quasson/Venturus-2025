@@ -27,8 +27,10 @@ const postUsuario = async (req, res) => {
             idade: req.body.idade,
             telefone: req.body.telefone,
             celular: req.body.celular || '',
-            cpf: req.body.cpf,
-            endereco: req.body.endereco,
+            //QUAL A PORRA DO PROBLEMA DESSE BANCO DE DADOS??????
+            //POR QUE CPF PODE SER NULL? DESGRAÇAAAAAAAAAAAAAAAAAAA
+            cpf: req.body.cpf || '',
+            endereco: req.body.endereco || '',
             bairro: req.body.bairro || '',
             cep: req.body.cep || '',
             instagram: req.body.instagram || '',

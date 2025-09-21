@@ -10,7 +10,7 @@ const postDoacao = async (req, res) => {
             email: req.body.email || 'Anônimo',
             valor: req.body.valor,
             linkPix: req.body.linkPix,
-            mensagem: req.body.mensagem || ''
+            mensagem: req.body.mensagem
         };
 
         if((!ProvavelDoacao.valor)||(ProvavelDoacao.valor<=0)){

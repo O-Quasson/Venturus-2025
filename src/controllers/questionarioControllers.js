@@ -4,13 +4,13 @@ const postQuestionario = async (req, res) => {
     try{ 
         const provavelQuestionario = ({
             usuarioId: req.body.usuarioId,
-            empregado: req.body.empregado,
+            empregado: req.body.empregado || false,
             quantos_animais_possui: req.body.quantos_animais_possui,
             motivos_para_adotar: req.body.motivos_para_adotar,
             quem_vai_sustentar_o_animal: req.body.quem_vai_sustentar_o_animal,
             numero_adultos_na_casa: req.body.numero_adultos_na_casa,
             numero_criancas_na_casa: req.body.numero_criancas_na_casa,
-            idades_criancas: req.body.idades_criancas,
+            idades_criancas: req.body.idades_criancas || 'Não tenho crianças',
             residencia_tipo: req.body.residencia_tipo,
             proprietario_permite_animais: req.body.proprietario_permite_animais,
             todos_de_acordo_com_adocao: req.body.todos_de_acordo_com_adocao,
