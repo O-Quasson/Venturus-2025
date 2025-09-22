@@ -1,6 +1,8 @@
 import {Animal, PedidoAdocao} from "../models/Modelos.js";
 import { Op } from 'sequelize';
 //esse op é um coiso do sequelize que permite a manipulação de datastamps (data, tempo, etc, sei lá como vocês chamam isso)
+import multer from 'multer';
+//o multer é pra upload de imagem
 
 const postAnimal = async (req, res) => {
   try {
@@ -15,7 +17,8 @@ const postAnimal = async (req, res) => {
       descricao: req.body.descricao,
       //uhhhh eu ACHO que não é assim que se requisita uma imagem
       //isso sequer funciona?
-      foto: req.body.foto || ''
+      //é foda
+      foto: req.file || null
     });
     
     //TEM A PORRA DE UM CAMPO PRA 'ADOTADO' (n coloquei no if ainda)
@@ -223,7 +226,7 @@ const patchAnimal = async (req, res) => {
         castrado: req.body.castrado,
         vacinado: req.body.vacinado,
         descricao: req.body.descricao,
-        foto: req.body.foto
+        foto: req.file
       })
 
       if(Object.keys(req.body).length<1){ 

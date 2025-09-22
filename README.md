@@ -21,6 +21,7 @@ Bibliotecas utilizadas:
 - SQLite
 - Sequelize
 - Lodash.omit (para omição do questionário em patchUsuario)
+- Multer (para upload de arquivos/imagens em postAnimal e patchAnimal)
 
 ------------------------------------------
 

@@ -13,9 +13,10 @@
   "dependencies": {
     "encryptjs": "^2.0.0",
     "express": "^5.1.0",
+    "json-web-token": "^3.2.0",
     "lodash.omit": "^4.5.0",
+    "multer": "^2.0.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   }
 }
-
