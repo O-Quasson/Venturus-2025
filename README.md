@@ -27,19 +27,19 @@ Bibliotecas utilizadas:
 
 Falta fazer: 
 
-- aprender a salvar imagem
+- seed pra sei lá, tão pedindo
+- AUTENTICAÇÃO CARALHOOOOOOOOOOOOO
 - proteger rotas getAnimaisAdmin, getAnimalById, patchAnimal e DelAnimal
 - colocar verificação de admin em DelAnimal (reforçando pq a gente vai provavelmente esquecer)
 - Proteger as rotas de admin
 - proteger rota de getAnimalById (reforçando dnv)
-- fazer rota de post autenticação (a gente n fez pq a gente é idiota)
 - arrumar a rota postAdocao pq ela tá errada (só ler a descrição/enunciado no github do alex)
 - retornar qrcode em postdoacao
-- adicionar criptografia
 - criação de link pix em postdoacao
 - adicionar maneira de criar qrcode
+  
 - REVISAR TUDO, ISSO É DEVERAS IMPORTANTE. IMPORTANTE TIPO, PRA CACETARALHOS
 - deve ter algo ainda pra fazer além dissos("disso" seu burro), eu só n sei
 - apagar os comentários que o esquizofrênico do kendy escreveu (eu?)
-
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso [hyperlink blocked]
+
