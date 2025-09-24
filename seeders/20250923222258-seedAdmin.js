@@ -37,11 +37,35 @@ export async function up(queryInterface, Sequelize) {
       }
     },
   );
+
+  await Usuario.findOrCreate({ 
+    where: { email: "builderman@admin.com"}, 
+    defaults: {
+        nome_completo: "David Baszucki",
+        email: "builderman@admin.com",
+        senha: senhaCriptografada,
+        cidade: "Robloxia",
+        estado: "RB",
+        idade: 62,
+        telefone: "11999999998",
+        cpf: "11122233444",
+        endereco: "Roblox HQ, 107",
+        administrador: true
+      }
+    },
+  );
 }
 
 // npx sequelize-cli db:seed:undo
 export async function down(queryInterface, Sequelize) {
   const adminProcurado = await Usuario.findOne({ where: { email: "c00lgui@admin.com" }});
-  await adminProcurado.destroy();
+  if(adminProcurado){
+    await adminProcurado.destroy();
+  };
+
+  const adminProcurado2 = await Usuario.findOne({ where: { email: "builderman@admin.com" }});
+  if(adminProcurado2){
+    await adminProcurado2.destroy();
+  };
 }
 

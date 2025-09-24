@@ -23,7 +23,7 @@ Bibliotecas utilizadas:
 - Lodash.omit (para omição do questionário em patchUsuario)
 - Multer (para upload de arquivos/imagens em postAnimal e patchAnimal)
 - Encryptjs (criptografar a senha)
-- Bcrypt ("dar hash" na senha e criptografar ela (denovo)(pq o Tomas pediu))
+- Bcrypt ("dar hash" na senha e criptografar ela (denovo (pq o Tomas pediu)))
 - Jsonwebtoken (criar token)
 
 ------------------------------------------

@@ -21,7 +21,7 @@ const postAnimal = async (req, res) => {
       //uhhhh eu ACHO que não é assim que se requisita uma imagem
       //isso sequer funciona?
       //é foda
-      foto: req.file || null
+      foto: req.file
     });
     
     //TEM A PORRA DE UM CAMPO PRA 'ADOTADO' (n coloquei no if ainda)
@@ -37,7 +37,7 @@ const postAnimal = async (req, res) => {
         castrado: provavelAnimal.castrado || false,
         vacinado: provavelAnimal.vacinado || false,
         descricao: provavelAnimal.descricao,
-        foto: provavelAnimal.foto
+        foto: provavelAnimal.foto.buffer
       });
 
       res.status(201).json({
@@ -242,7 +242,7 @@ const patchAnimal = async (req, res) => {
         castrado: req.body.castrado,
         vacinado: req.body.vacinado,
         descricao: req.body.descricao,
-        foto: req.file
+        foto: req.file.buffer
       })
 
       //acho muito foda que eu demorei 20 minutos pra descobrir que eu podia fazer isso
