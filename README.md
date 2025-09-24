@@ -22,18 +22,15 @@ Bibliotecas utilizadas:
 - Sequelize
 - Lodash.omit (para omição do questionário em patchUsuario)
 - Multer (para upload de arquivos/imagens em postAnimal e patchAnimal)
+- Encryptjs (criptografar a senha)
+- Bcrypt ("dar hash" na senha e criptografar ela (denovo)(pq o Tomas pediu))
+- Jsonwebtoken (criar token)
 
 ------------------------------------------
 
 Falta fazer: 
 
-- seed pra sei lá, tão pedindo
-- AUTENTICAÇÃO CARALHOOOOOOOOOOOOO
-- proteger rotas getAnimaisAdmin, getAnimalById, patchAnimal e DelAnimal
-- colocar verificação de admin em DelAnimal (reforçando pq a gente vai provavelmente esquecer)
-- Proteger as rotas de admin
-- proteger rota de getAnimalById (reforçando dnv)
-- arrumar a rota postAdocao pq ela tá errada (só ler a descrição/enunciado no github do alex)
+- formatar direito o res.status do postQuestionario
 - retornar qrcode em postdoacao
 - criação de link pix em postdoacao
 - adicionar maneira de criar qrcode

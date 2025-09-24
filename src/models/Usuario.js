@@ -41,6 +41,7 @@ export default (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true
         },
+        //ah sim, eu posso deixar meu FODENDO CPF nulo, mas eu não posso deixar meu ENDEREÇO (que eu posso colocar falso btw) como nulo
         cpf: {
             type: DataTypes.STRING,
             allowNull: true,

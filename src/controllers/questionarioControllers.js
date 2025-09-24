@@ -2,6 +2,9 @@ import { Questionario, Usuario } from "../models/Modelos.js";
 
 const postQuestionario = async (req, res) => {
     try{ 
+        // a vtmnc, olha o tamanho dessa porra
+        // mas nem por um caralho eu tento cadastrar um questionario junto de usuário pra teste
+        // é, eu acabei tendo que escrever toda essa porra pra testar, vtmnc
         const provavelQuestionario = ({
             usuarioId: req.body.usuarioId,
             empregado: req.body.empregado || false,
@@ -61,6 +64,8 @@ const postQuestionario = async (req, res) => {
             res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
         }else{
 
+            //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            //NÃO, ISSO DNV NAAAAAAAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
             const novoQuestionario = await Questionario.create({
                 usuarioId: provavelQuestionario.usuarioId,
                 empregado: provavelQuestionario.empregado,
@@ -108,6 +113,8 @@ const postQuestionario = async (req, res) => {
                 data_disponivel_para_buscar_animal: provavelQuestionario.data_disponivel_para_buscar_animal
             });
 
+            //bro...
+            //fds, eu vou adicionar pra algm formatar direito essa porra
             res.status(201).json({            
                 "empregado": novoQuestionario.empregado,
                 "quantos_animais_possui": novoQuestionario.quantos_animais_possui,
@@ -156,7 +163,9 @@ const postQuestionario = async (req, res) => {
         }
 
     }catch(error){
-        //boa 
+        //boa
+        //essa caralha nem tava sendo pedida
+        //sim, vadia, eu tirei essa resposta do meu cu
         res.status(500).json({"erro": "Erro interno ao responder o questionário"})
     };
 };

@@ -4,6 +4,7 @@ import { postAnimal, getAnimais } from "../controllers/animalControllers.js";
 import multer from 'multer';
 
 //configurações do multer
+//sla bro
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/animais', upload.single('foto'), postAnimal);

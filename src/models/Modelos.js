@@ -13,11 +13,12 @@
 
     export const connectDB = async () => {
         
-        await sequelize.sync({ force: true });
+        await sequelize.sync();
     
         await sequelize.authenticate();
 
         //seed
+        //do you hear the whistle?
 
         console.log("Connected to DB");
     };
@@ -50,5 +51,9 @@
     // - Um Usuario pode ter vários Pedidos de Adoção.
     // - Um Animal pode ter vários Pedidos de Adoção.
     // A tabela PedidosAdocao serve como uma tabela de junção entre Usuarioes e Animais.
+
+
+    //se tu sabia que tinha que conectar
+    //POR QUE VOCÊS MESMOS NÃO CONECTARAM, CARALHO?
 
     export default { connectDB, sequelize, Animal, Usuario, Questionario, PedidoAdocao, Doacao };

@@ -32,6 +32,7 @@ export default (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        //esse campo em específico é tipo 1111111111l11111111 (tem um L minúsculo aqui no meio)
         idades_criancas: {
             type: DataTypes.STRING,
             get() {

@@ -1,9 +1,12 @@
 import {Animal, PedidoAdocao} from "../models/Modelos.js";
 import { Op } from 'sequelize';
-//esse op é um coiso do sequelize que permite a manipulação de datastamps (data, tempo, etc, sei lá como vocês chamam isso)
+//esse op é um coiso do sequelize que permite a manipulação de timestamps (data, tempo, etc, sei lá como vocês chamam isso)
 import multer from 'multer';
 //o multer é pra upload de imagem
 
+//ô seu animal de teta, tá dando erro aqui
+//POR QUE CARALHOS TÁ DANDO ERRO AQUI SE A ROTA JÁ TÁ FEITA???????????????????
+//TAVA DANDO CERTO ATÉ A 30 MINUTOS ATRÁS
 const postAnimal = async (req, res) => {
   try {
 
@@ -23,6 +26,7 @@ const postAnimal = async (req, res) => {
     
     //TEM A PORRA DE UM CAMPO PRA 'ADOTADO' (n coloquei no if ainda)
     //PRA QUE CARALHOS TU VAI CADASTRAR UM ANIMAL QUE JÁ FOI ADOTADO, PORRA
+    //n vou colocar o campo adotado no if, ele tem default value 😎👍
     if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)||(!provavelAnimal.castrado)||(!provavelAnimal.vacinado)){
       res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
     }else{
@@ -57,6 +61,9 @@ const postAnimal = async (req, res) => {
 
 const getAnimais = async (req, res) => {
   try{
+    //req.query é muito mais peak que req.body
+    //aliás, é beeeem melhor usar req.query pra requisições get que tu vai ter filtro, pq aí fica parecendo coisa profissional
+    //dumsekahh
     const parametros = { 
       especie: req.query.especie, 
       porte: req.query.porte, 
@@ -66,6 +73,8 @@ const getAnimais = async (req, res) => {
 
     let filtros = {};
     
+    //pra testar: http://localhost:3000 ou algo do tipo, n lembro/?nome do filtro = parametro que tu quer
+    //tipo /?castrado=true ou /?porte=de+armas (usar um + pra substituir espaço)
     if(parametros.especie){
       filtros.especie = parametros.especie;
     };
@@ -104,6 +113,8 @@ const getAnimais = async (req, res) => {
 
 const getAnimaisAdmin = async (req, res) => {
   try{
+    //admin pode pedir qualquer campo na requisição pq ele é admin
+    //pai que eh pai eh pai neh pai?
     const parametros = { 
       id: req.query.id,
       nome: req.query.nome,
@@ -147,6 +158,7 @@ const getAnimaisAdmin = async (req, res) => {
     };
 
     //dá pra pedir a data só como Ano-Mes-Dia, sem precisar de horário
+    //porra, chato pra caralho fazer o bagulho, mané
     if(parametros.createdAt){
         const dataInicio = new Date(parametros.createdAt);
         const dataFim = new Date(parametros.createdAt);
@@ -171,6 +183,7 @@ const getAnimaisAdmin = async (req, res) => {
     };
 
     //usa os filtros, pega os pedidos de adoção de cada bicho junto das informações deles e ordena por ordem do mais antigo até o mais novo
+    //essa parte foi feita pelo nathan, não me pergunte como ela funciona
     const animais = await Animal.findAll({
       where: filtros,
       include: {
@@ -187,6 +200,8 @@ const getAnimaisAdmin = async (req, res) => {
     });
 
   }catch(error){
+    //eu te amo, console.log(error)
+    //sério, isso aqui salva muito na hora de achar o erro
     console.log(error)
     res.status(500).json({ "erro": "Erro ao buscar animais" });
   }
@@ -194,6 +209,7 @@ const getAnimaisAdmin = async (req, res) => {
 
 const getAnimalById = async (req, res) => {
   try{
+    //copiado do código de cima só que mudado 2 coisas lmfaooooooooooo
     const animalBuscado = await Animal.findByPk(req.params.id, { include: {
       model: PedidoAdocao,
       attributes: ['id', 'usuarioId', 'status', 'posicao_fila', 'createdAt'],
@@ -229,6 +245,8 @@ const patchAnimal = async (req, res) => {
         foto: req.file
       })
 
+      //acho muito foda que eu demorei 20 minutos pra descobrir que eu podia fazer isso
+      //tipo, parece tão óbvio
       if(Object.keys(req.body).length<1){ 
         res.status(400).json({"erro": "Nenhum campo foi fornecido para atualização"});
       }else{
@@ -244,6 +262,9 @@ const patchAnimal = async (req, res) => {
 
 //falta colocar autenticação aqui
 //res.status(403).json({"erro": "Acesso não autorizado"})
+//não falta não, seu animal
+//tá funcionando
+//tu nem deveria colocar autenticação aqui, isso é coisa do token
 const delAnimal = async (req, res) => {
   try{  
     const animalProcurado = await Animal.findByPk(req.params.id);

@@ -1,0 +1,19 @@
+Email do Tomas:
+
+Bom dia Gabriel, tudo bem?
+
+1 - Seria apenas a adição, no caso se as adoções tivessem um DELETE teria que mover a posição na fila, mas como não possuem um DELETE a descrição ficou um pouco confusa. Na sala de aula eu tirei essa dúvida de um ou dois grupos, mas se puder avisar os outros sobre isto.
+
+2 - Para receber arquivos no Node.js normalmente utilizamos alguma lib que já tem isto pronto, a mais comum eu acredito que seja a Multer. Aqui está um tutorial de como implementar esta parte de receber uma imagem. https://consolelog.com.br/upload-de-arquivos-imagens-utilizando-multer-express-nodejs/
+
+3 - Em relação a autenticação, pelo que eu me lembre não é obrigatório utilizar JWT, mas seria no geral utilizar um lib como a bcrypt para criptografar a senha e salvar a senha criptografada no banco de dados para que a senha não seja "visível" e o ideal seria criar um middleware para fazer esta autenticação.
+Neste link tem um exemplo utilizando o bcrypt e o JWT: https://medium.com/@utkarsh.gupta0311/secure-user-authentication-with-jwt-bcrypt-and-node-js-78c7bb2d86a1
+Nest link tem um exemplo de middleware de autenticação: https://www.turing.com/kb/building-middleware-for-node-js
+Seria basicamente no rota adicionar a função de autenticação de vocês
+
+4 - Seed ou migration são arquivos que inserem dados no banco de dados antes do projeto inicializar. Neste caso vamos inserir o usuário com a permissão de administrador.
+Exemplo de seed com o sequelize: https://medium.com/@stroklabs/migrations-e-seeders-no-sequelizejs-67ba3571ed0e
+
+5 - A parte do QR code/link do Pix é um extra, não é necessário, é pra ser um desafio pra vocês. Existem libs abertas que fazem este tipo de serviço e vocês podem importar uma destas libs, ver como elas funcionam e inserirem elas no projeto. Só deixar claro que a lib deve estar também no README.
+
+Em relação ao projeto geral, eu dei uma verificada rápida e parece que estão desenvolvendo de maneira correta, acho que o ponto da seed vocês até já resolveram. 
