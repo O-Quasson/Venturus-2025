@@ -1,4 +1,5 @@
 import {Doacao} from '../models/Modelos.js';
+import QRCode from 'qrcode';
 
 //[insira imagem dos capitão dos penguins de madagascar aqui]
 //Kowaski Analize
@@ -27,27 +28,42 @@ import {Doacao} from '../models/Modelos.js';
 // Icelandic stare + Thai skip + Hungarian wink + Swiss tiptoe + Argentinian point + Chilean clap + Peruvian lean + Kenyan dash + 
 // Indian dash + Dutch wave + Polish work + Scottish lean + Swedish whistle + Moroccan skip + Ukrainian lean + Danish dive + Finnish flex + 
 // Icelandic tilt + Thai flick + Indian whistle + Swedish dash
+
 const postDoacao = async (req, res) => {
     try {
         const ProvavelDoacao = {
             nome: req.body.nome || 'Anônimo',
             email: req.body.email || 'Anônimo',
             valor: req.body.valor,
-            linkPix: req.body.linkPix,
+            linkPix: `alterar depois`,
             mensagem: req.body.mensagem
         };
 
         if((!ProvavelDoacao.valor)||(ProvavelDoacao.valor<=0)){
             res.status(400).json({"erro": "Valor da doação é obrigatório e deve ser um número positivo"});
         }else{
+            //eu real não sei como funciona link pix
+            //o email deveria ser da pessoa que tá doando ou de que tá recebendo a doação?
+            //chave personalizada q eu n sei sla bro lmao
+            // ProvavelDoacao.linkPix = `00020126580014BR.GOV.BCB.PIX0136${ProvavelDoacao.email}5204000053039865405${ProvavelDoacao.valor.toFixed(2)}5802BR5920${ProvavelDoacao.nome.split(" ")[0]}6009Campinas62070503***6304ABCD`;
+            
+            ProvavelDoacao.linkPix = `00020126580014BR.GOV.BCB.PIX0136chavepix-ficticia@exemplo.com5204000053039865405${ProvavelDoacao.valor.toFixed(2)}5802BR5920NomeExemploFictício6009SaoPaulo62070503***6304ABCD`
             const NovaDoacao = await Doacao.create(ProvavelDoacao);
+
+            //usar esse aqui se for mandar o qrcode no terminal
+            // const qrcodeCriado = await QRCode.toString(ProvavelDoacao.linkPix, { type: 'terminal'});
+            
+            //usar esse aqui se for gerar qrcode como texto (???????????????????? nem faz sentido)
+            //aparentemente é pra usar esse mesmo
+            const qrcodeCriado = await QRCode.toDataURL(ProvavelDoacao.linkPix);
+            
 
             res.status(201).json({
                 "doacao_id": NovaDoacao.id,
                 nome: NovaDoacao.nome,
                 valor: NovaDoacao.valor,
                 linkPix: NovaDoacao.linkPix,
-                //uhhhh... como que a gente coloca qr code aqui?????????
+                qrcodeCriado
             })
         };
     }catch (error) {

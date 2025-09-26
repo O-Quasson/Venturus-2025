@@ -17,8 +17,8 @@
     "jsonwebtoken": "^9.0.2",
     "lodash.omit": "^4.5.0",
     "multer": "^2.0.2",
+    "qrcode": "^1.5.4",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   }
 }
-//find my comments

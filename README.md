@@ -25,13 +25,12 @@ Bibliotecas utilizadas:
 - Encryptjs (criptografar a senha)
 - Bcrypt ("dar hash" na senha e criptografar ela (denovo (pq o Tomas pediu)))
 - Jsonwebtoken (criar token)
+- Qrcode (qrcode 👍)
 
 ------------------------------------------
 
 Falta fazer: 
 
-- formatar direito o res.status do postQuestionario
-- retornar qrcode em postdoacao
 - criação de link pix em postdoacao
 - adicionar maneira de criar qrcode
 
