@@ -19,7 +19,7 @@ const autenticar = (req, res, next) => {
 
   //que caralhos é split, bro...
   //ata, ele divide a string em um array de 2 posições e pega a string da 2ª posição
-  //dumbass nigga 
+  //https://www.w3schools.com/nodejs/nodejs_api_auth.asp
   const token = header.split(" ")[1];
 
   const tokenVerificado = jwt.verify(token, secreta);
@@ -32,5 +32,6 @@ const autenticar = (req, res, next) => {
     next();
   };
 };
+
 
 export default autenticar;
