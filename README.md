@@ -32,12 +32,13 @@ Bibliotecas utilizadas:
 Falta fazer: 
 
 - criação de link pix em postdoacao
-- adicionar maneira de criar qrcode
+- perguntar oq caralhos é um linkpix
 
   
 - REVISAR TUDO, ISSO É DEVERAS IMPORTANTE. IMPORTANTE TIPO, PRA CACETARALHOS
 - deve ter algo ainda pra fazer além dissos("disso" seu burro), eu só n sei
 - apagar os comentários que o esquizofrênico do kendy escreveu (eu?)
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso [hyperlink blocked]
+
 
 
