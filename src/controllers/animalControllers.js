@@ -4,9 +4,6 @@ import { Op } from 'sequelize';
 import multer from 'multer';
 //o multer é pra upload de imagem
 
-//ô seu animal de teta, tá dando erro aqui
-//POR QUE CARALHOS TÁ DANDO ERRO AQUI SE A ROTA JÁ TÁ FEITA???????????????????
-//TAVA DANDO CERTO ATÉ A 30 MINUTOS ATRÁS
 const postAnimal = async (req, res) => {
   try {
 
@@ -14,20 +11,13 @@ const postAnimal = async (req, res) => {
       nome: req.body.nome,
       especie: req.body.especie,
       porte: req.body.porte,
-      //cara, pq caralhos os campos castrado e vacinado não podem ser vazios? Tipo, e se o cachorro for da rua e eu não souber? Banco de dados todo errado
       castrado: req.body.castrado,
       vacinado: req.body.vacinado,
       descricao: req.body.descricao,
-      //uhhhh eu ACHO que não é assim que se requisita uma imagem
-      //isso sequer funciona?
-      //é foda
-      foto: req.file
+      foto: req.file || null
     });
     
-    //TEM A PORRA DE UM CAMPO PRA 'ADOTADO' (n coloquei no if ainda)
-    //PRA QUE CARALHOS TU VAI CADASTRAR UM ANIMAL QUE JÁ FOI ADOTADO, PORRA
-    //n vou colocar o campo adotado no if, ele tem default value 😎👍
-    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)||(!provavelAnimal.castrado)||(!provavelAnimal.vacinado)){
+    if((!provavelAnimal.nome)||(!provavelAnimal.especie)||(!provavelAnimal.porte)||(!provavelAnimal.descricao)||(provavelAnimal.castrado === undefined)||(provavelAnimal.vacinado === undefined)){
       res.status(400).json({"erro": "Todos os campos obrigatórios devem ser preenchidos corretamente."});
     }else{
       const novoAnimal = await Animal.create({
@@ -63,7 +53,6 @@ const getAnimais = async (req, res) => {
   try{
     //req.query é muito mais peak que req.body
     //aliás, é beeeem melhor usar req.query pra requisições get que tu vai ter filtro, pq aí fica parecendo coisa profissional
-    //dumsekahh
     const parametros = { 
       especie: req.query.especie, 
       porte: req.query.porte, 
@@ -98,7 +87,7 @@ const getAnimais = async (req, res) => {
       order: [["createdAt", "ASC"]]
     });
 
-    res.json({
+    res.status(201).json({
       "data": animais,
       "total": animais.length
     });
@@ -109,12 +98,10 @@ const getAnimais = async (req, res) => {
 };
 
 //rota de admin a partir daqui
-//ainda tem que colocar proteção nelas
 
 const getAnimaisAdmin = async (req, res) => {
   try{
     //admin pode pedir qualquer campo na requisição pq ele é admin
-    //pai que eh pai eh pai neh pai?
     const parametros = { 
       id: req.query.id,
       nome: req.query.nome,
@@ -158,7 +145,6 @@ const getAnimaisAdmin = async (req, res) => {
     };
 
     //dá pra pedir a data só como Ano-Mes-Dia, sem precisar de horário
-    //porra, chato pra caralho fazer o bagulho, mané
     if(parametros.createdAt){
         const dataInicio = new Date(parametros.createdAt);
         const dataFim = new Date(parametros.createdAt);
@@ -194,7 +180,7 @@ const getAnimaisAdmin = async (req, res) => {
       order: [["createdAt", "ASC"]]
     });
 
-    res.json({
+    res.status(200).json({
       "data": animais,
       "total": animais.length
     });
@@ -235,22 +221,67 @@ const patchAnimal = async (req, res) => {
     if(!animalProcurado){
       res.status(404).json({"erro": "Animal não encontrado"});
     }else{
-      const animalAtualizado = await animalProcurado.update({
-        nome: req.body.nome,
-        especie: req.body.especie,
-        porte: req.body.porte,
-        castrado: req.body.castrado,
-        vacinado: req.body.vacinado,
-        descricao: req.body.descricao,
-        foto: req.file.buffer
-      })
 
-      //acho muito foda que eu demorei 20 minutos pra descobrir que eu podia fazer isso
-      //tipo, parece tão óbvio
-      if(Object.keys(req.body).length<1){ 
+      const parametros = { 
+        nome: req.body.nome,
+        especie: req.body.especie, 
+        porte: req.body.porte, 
+        castrado: req.body.castrado, 
+        vacinado: req.body.vacinado,
+        adotado: req.body.adotado,
+        descricao: req.body.descricao,
+        foto: req.file || undefined
+      };
+
+      let camposParaAtualizar = {};
+
+      if(parametros.nome){
+        camposParaAtualizar.nome = parametros.nome;
+      };
+      
+      if(parametros.especie){
+        camposParaAtualizar.especie = parametros.especie;
+      };
+
+      if(parametros.porte){
+        camposParaAtualizar.porte = parametros.porte;
+      };
+
+      if(parametros.castrado !== undefined) {
+        camposParaAtualizar.castrado = parametros.castrado; 
+      };
+      
+      if(parametros.vacinado !== undefined){
+        camposParaAtualizar.vacinado = parametros.vacinado;
+      };
+
+      if(parametros.adotado !== undefined){
+        camposParaAtualizar.adotado = parametros.adotado;
+      };
+
+      if(parametros.descricao){
+        camposParaAtualizar.descricao = parametros.descricao;
+      };
+
+      if(parametros.foto){
+        camposParaAtualizar.foto = parametros.foto.buffer;
+      };
+
+      if(Object.keys(camposParaAtualizar).length<1){ 
         res.status(400).json({"erro": "Nenhum campo foi fornecido para atualização"});
       }else{
-        res.status(200).json(animalAtualizado);
+        
+        const animalAtualizado = await animalProcurado.update(camposParaAtualizar);
+
+        res.status(200).json({
+          id: animalAtualizado.id,
+          nome: animalAtualizado.nome,
+          castrado: animalAtualizado.castrado,
+          vacinado: animalAtualizado.vacinado,
+          adotado: animalAtualizado.adotado,
+          descricao: animalAtualizado.descricao,
+          updated_at: animalAtualizado.updatedAt
+        });
       }
 
     }
@@ -260,11 +291,6 @@ const patchAnimal = async (req, res) => {
   }
 };
 
-//falta colocar autenticação aqui
-//res.status(403).json({"erro": "Acesso não autorizado"})
-//não falta não, seu animal
-//tá funcionando
-//tu nem deveria colocar autenticação aqui, isso é coisa do token
 const delAnimal = async (req, res) => {
   try{  
     const animalProcurado = await Animal.findByPk(req.params.id);

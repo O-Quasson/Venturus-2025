@@ -52,8 +52,4 @@
     // - Um Animal pode ter vários Pedidos de Adoção.
     // A tabela PedidosAdocao serve como uma tabela de junção entre Usuarioes e Animais.
 
-
-    //se tu sabia que tinha que conectar
-    //POR QUE VOCÊS MESMOS NÃO CONECTARAM, CARALHO?
-
     export default { connectDB, sequelize, Animal, Usuario, Questionario, PedidoAdocao, Doacao };

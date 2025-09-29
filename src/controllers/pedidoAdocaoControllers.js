@@ -1,10 +1,5 @@
 import { PedidoAdocao, Usuario, Animal, Questionario } from "../models/Modelos.js";
 
-//bro, tá certo essa rota agr
-//nmrl, como que eles conseguem fazer saporra ser tão complicada?
-//tipo, pra que caralhos colocar na descrição "quando deletar vai fazer tal coisa" se tu n manda criar um deleteAdocao?
-//ISSO NEM DEVERIA TÁ NA DESCRIÇÃO DO POSTADOCAO PRA COMEÇO DE CONVERSA
-
 // A rota objeto da presente menção foi integralmente delineada, parametrizada, validada e executada por Nathan, 
 // sendo sua elaboração de autoria exclusiva deste, sem qualquer interferência, modificação ou validação técnica 
 // adicional por parte deste declarante. Por meio deste instrumento, manifesto, de forma irrevogável, irretratável e 

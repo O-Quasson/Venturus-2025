@@ -40,7 +40,7 @@ export default (sequelize) => {
             allowNull: false 
         },
         foto: { 
-            //PORRA, DE TUDO QUE TÁ NA [[hyperlink blocked]], LOGO A PORRA DA [[foto de gatos fofos.jpeg]] TÁ COMO [[null]]?!
+            //de tanta coisa aqui, pq só a foto tá como allownull?
             type: DataTypes.BLOB('long'),
             allowNull: true
         }

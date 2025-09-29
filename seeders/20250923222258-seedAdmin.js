@@ -7,16 +7,14 @@ import { Sequelize } from "sequelize";
 //peak pra caralho
 
 //outra linha de código mega foda que eu n sei pra que serve mais ta aí pra algo
-//ou não tbm, essa porra tá comentada
-//que caralho é um migration?
+//ou não tbm, essa coisa tá comentada
 /** @type {import('sequelize-cli').Migration} */
 
 //npx sequelize-cli db:seed:all para rodar
 
-//blue is better
 const secreta = "teambluududjointoday!!!";
 
-//cara, eu realmente gostaria de saber como caralhos eu usaria a porra da queryInterface, só que ela n identificava a tabela Usuario, ent eu tive que transformar ela em sequelize + sqlite tbm
+//cara, eu realmente gostaria de saber como eu usaria a porcaria da queryInterface, só que ela n identificava a tabela Usuario, ent eu tive que transformar ela em sequelize + sqlite tbm
 //não me julga, isso é permitido de fazer em uma seed, só olhar exemplos na internet
 export async function up(queryInterface, Sequelize) {
   const senhaCriptografada = encryptjs.encrypt("admin", secreta, 256);
