@@ -47,8 +47,7 @@ const postUsuario = async (req, res) => {
             });
 
             if(!emailExiste){
-                const senhaHash = await bcrypt.hash(provavelUsuario.senha, 10 )
-                const senhaCriptografada = criptografarSenha(senhaHash);
+                const senhaCriptografada = criptografarSenha(provavelUsuario.senha);
 
                 const novoUsuario = await Usuario.create({
                     nome_completo: req.body.nome_completo,
@@ -110,9 +109,8 @@ const postLogin = async (req, res) => {
         if(!procuraUsuario){
             res.status(401).json({"erro": "Email ou senha inválidos."});
         }else{
-            const senhaDescriptografada = await bcrypt.compare(usuarioAutenticado.senha, descriptografarSenha(procuraUsuario.senha));
+            const senhaDescriptografada = descriptografarSenha(procuraUsuario.senha);
             if(senhaDescriptografada==false){
-                console.log(senhaDescriptografada)
                 res.status(401).json({"erro": "Email ou senha inválidos."});
             }else{
                 const token = jwt.sign({id: procuraUsuario.id, email: procuraUsuario.email, administrador: procuraUsuario.administrador}, secreta, {expiresIn: '1h'});
@@ -143,8 +141,7 @@ const patchUsuario = async (req, res) => {
                 res.status(400).json({"erro": "Pelo menos um campo deve ser enviado para atualização"});
             }else{ 
                 if (req.body.senha) {
-                    const senhaHash = await bcrypt.hash(req.body.senha, 10);
-                    req.body.senha = criptografarSenha(senhaHash);
+                    req.body.senha = criptografarSenha(req.body.senha);
                 }
                 //esse omit serve só pra passar o usuário atualizado sem o questionário, pq senão o questionário daria erro no código, pq n tem um campo questionário na tabela de usuário
                 const usuarioAtualizado = await usuarioProcurado.update(omit(req.body, ['questionario']));
@@ -186,7 +183,7 @@ const getUsuarioById = async (req, res) => {
         if(!usuarioProcurado){
             res.status(404).json({"erro": "Tutor não encontrado"});
         }else{
-            usuarioProcurado.senha= descriptografarSenha(usuarioProcurado.senha)
+            usuarioProcurado.senha = descriptografarSenha(usuarioProcurado.senha)
             res.status(200).json(usuarioProcurado);
         };
 
