@@ -111,10 +111,10 @@ const postLogin = async (req, res) => {
             res.status(401).json({"erro": "Email ou senha inválidos."});
         }else{
             const senhaDescriptografada = await bcrypt.compare(usuarioAutenticado.senha, descriptografarSenha(procuraUsuario.senha));
-            if(!senhaDescriptografada){
+            if(senhaDescriptografada==false){
+                console.log(senhaDescriptografada)
                 res.status(401).json({"erro": "Email ou senha inválidos."});
             }else{
-
                 const token = jwt.sign({id: procuraUsuario.id, email: procuraUsuario.email, administrador: procuraUsuario.administrador}, secreta, {expiresIn: '1h'});
                 res.status(200).json({"message": "Login realizado com sucesso."});
                 console.log(token)

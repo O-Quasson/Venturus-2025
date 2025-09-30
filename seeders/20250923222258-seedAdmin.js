@@ -3,6 +3,7 @@
 import encryptjs from "encryptjs";
 import { connectDB, Usuario, sequelize } from "../src/models/Modelos.js"
 import { Sequelize } from "sequelize";
+import bcrypt from "bcrypt"
 //eu amo importar coisas que eu absolutamente NÃO USO no código
 //peak pra caralho
 
@@ -17,7 +18,8 @@ const secreta = "teambluududjointoday!!!";
 //cara, eu realmente gostaria de saber como eu usaria a porcaria da queryInterface, só que ela n identificava a tabela Usuario, ent eu tive que transformar ela em sequelize + sqlite tbm
 //não me julga, isso é permitido de fazer em uma seed, só olhar exemplos na internet
 export async function up(queryInterface, Sequelize) {
-  const senhaCriptografada = encryptjs.encrypt("admin", secreta, 256);
+  const senhaHash = await bcrypt.hash("admin", 10);
+  const senhaCriptografada = encryptjs.encrypt(senhaHash, secreta, 256);
 
   await Usuario.findOrCreate({ 
     where: { email: "c00lgui@admin.com"}, 
