@@ -26,7 +26,7 @@ const postAdocoes = async (req, res) => {
 
         //sem usuarioEncontrado ou animal da erro
         if (!usuarioEncontrado || !animalEncontrado) {
-            res.status(404).json({ "erro": "tutor ou animal não encontrado" });
+            res.status(404).json({ "erro": "Tutor ou animal não encontrado" });
         }else{
 
             //sem responder o questionario da erro

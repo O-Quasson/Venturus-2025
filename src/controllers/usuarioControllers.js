@@ -110,7 +110,7 @@ const postLogin = async (req, res) => {
             res.status(401).json({"erro": "Email ou senha inválidos."});
         }else{
             const senhaDescriptografada = descriptografarSenha(procuraUsuario.senha);
-            if(senhaDescriptografada==false){
+            if(senhaDescriptografada!=usuarioAutenticado.senha){
                 res.status(401).json({"erro": "Email ou senha inválidos."});
             }else{
                 const token = jwt.sign({id: procuraUsuario.id, email: procuraUsuario.email, administrador: procuraUsuario.administrador}, secreta, {expiresIn: '1h'});
@@ -143,11 +143,13 @@ const patchUsuario = async (req, res) => {
                 if (req.body.senha) {
                     req.body.senha = criptografarSenha(req.body.senha);
                 }
+                //google pesquisar npm omit data from object 
                 //esse omit serve só pra passar o usuário atualizado sem o questionário, pq senão o questionário daria erro no código, pq n tem um campo questionário na tabela de usuário
                 const usuarioAtualizado = await usuarioProcurado.update(omit(req.body, ['questionario']));
 
                 if(req.body.questionario){
                     if (usuarioProcurado.questionario) {
+                        //sinceramente, não entendi o que vocês fizeram nessa linha aqui
                         await usuarioProcurado.questionario.update(req.body.questionario);
                     }else{
                         req.body.questionario.usuarioId = usuarioProcurado.id;
