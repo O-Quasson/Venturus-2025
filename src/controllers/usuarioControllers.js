@@ -67,7 +67,7 @@ const postUsuario = async (req, res) => {
                 });
 
                 if(provavelUsuario.questionario){
-                    provavelUsuario.questionario.usuarioId = novoUsuario.id;
+                    provavelUsuario.questionario.tutorId = novoUsuario.id;
                     const questionarioFeito = await Questionario.create(provavelUsuario.questionario);
                 };
 
@@ -152,13 +152,13 @@ const patchUsuario = async (req, res) => {
                         //sinceramente, não entendi o que vocês fizeram nessa linha aqui
                         await usuarioProcurado.questionario.update(req.body.questionario);
                     }else{
-                        req.body.questionario.usuarioId = usuarioProcurado.id;
+                        req.body.questionario.tutorId = usuarioProcurado.id;
                         await Questionario.create(req.body.questionario);
                     }
                 }
 
                 const questionarioFeito = await Questionario.findOne({where: {
-                    usuarioId: usuarioAtualizado.id
+                    tutorId: usuarioAtualizado.id
                 }});
 
                 res.status(200).json({

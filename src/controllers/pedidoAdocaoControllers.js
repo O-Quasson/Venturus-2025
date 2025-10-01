@@ -30,7 +30,7 @@ const postAdocoes = async (req, res) => {
         }else{
 
             //sem responder o questionario da erro
-            const questionario = await Questionario.findOne({ where: { usuarioId: usuarioEncontrado.id } });
+            const questionario = await Questionario.findOne({ where: { tutorId: usuarioEncontrado.id } });
 
             if (!questionario) {
                 res.status(400).json({ "erro": "O tutor ainda não respondeu o questionário obrigatório" });

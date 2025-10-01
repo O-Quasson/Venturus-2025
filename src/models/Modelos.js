@@ -9,7 +9,16 @@
     export const sequelize = new Sequelize({
         dialect: 'sqlite',
         storage: './database.sqlite',
+        // username: 'postgres',
+        // password: '1234',
+        // database: 'postgres',
+        // host: 'db.bmvbmhpjhosqikpnmcpz.supabase.co',
+        // port: 5432,
+        // dialect: 'postgres',
+        // logging: false
     });
+
+    // postgresql://postgres:[YOUR-PASSWORD]@db.bmvbmhpjhosqikpnmcpz.supabase.co:5432/postgres
 
     export const connectDB = async () => {
         
@@ -36,8 +45,8 @@
     //conecchão
     //huh?
 
-    Usuario.hasOne(Questionario, {foreignKey: { name: 'usuarioId', allowNull: false}, onDelete: 'CASCADE'});
-    Questionario.belongsTo(Usuario, {foreignKey: 'usuarioId'});
+    Usuario.hasOne(Questionario, {foreignKey: { name: 'tutorId', allowNull: false}, onDelete: 'CASCADE'});
+    Questionario.belongsTo(Usuario, {foreignKey: 'tutorId'});
 
     Usuario.hasMany(PedidoAdocao, { foreignKey: { name: 'usuarioId', allowNull: false}, onDelete: 'CASCADE'});
     PedidoAdocao.belongsTo(Usuario, { as: 'Usuario', foreignKey: 'usuarioId'});

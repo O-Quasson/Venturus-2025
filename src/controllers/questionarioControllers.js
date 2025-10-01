@@ -4,7 +4,7 @@ const postQuestionario = async (req, res) => {
     try{ 
 
         const provavelQuestionario = ({
-            usuarioId: req.body.usuarioId,
+            tutorId: req.body.tutorId,
             empregado: req.body.empregado || false,
             quantos_animais_possui: req.body.quantos_animais_possui,
             motivos_para_adotar: req.body.motivos_para_adotar,
@@ -51,7 +51,7 @@ const postQuestionario = async (req, res) => {
         });
 
         //por que não tem um res.status para usuário inexistente, bruh?
-        const usuarioExistente = await Usuario.findByPk(provavelQuestionario.usuarioId);
+        const usuarioExistente = await Usuario.findByPk(provavelQuestionario.tutorId);
 
         //bro, como que faz isso não ser um if gigante? pq essa porcaria definitivamente não vai funcionar
         //descobri o .filter lmaoooo
@@ -62,7 +62,7 @@ const postQuestionario = async (req, res) => {
         }else{
 
             const novoQuestionario = await Questionario.create({
-                usuarioId: provavelQuestionario.usuarioId,
+                tutorId: provavelQuestionario.tutorId,
                 empregado: provavelQuestionario.empregado,
                 quantos_animais_possui: provavelQuestionario.quantos_animais_possui,
                 motivos_para_adotar: provavelQuestionario.motivos_para_adotar,
