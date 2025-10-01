@@ -7,9 +7,9 @@ Turma: 2º DS - MTEC da ETEC Bento Quirino
 Integrantes do grupo: 
 
 - Gabriel Kendy Ornelas Shigaki
-- Gabriel Honório (não sei o resto)
+- Gabriel Honório Afonso
 - Guilherme Becklas Martinez de Carvalho
-- Nathan Lorenzo de Novais (tem o "de" no nome dele, né?)
+- Nathan Lorenzo Novais
 - Pedro de Souza Bragante
 
 ------------------------------------------
@@ -38,6 +38,7 @@ Falta fazer:
 - deve ter algo ainda pra fazer além dissos("disso" seu burro), eu só n sei
 - apagar os comentários que o esquizofrênico do kendy escreveu (eu?)
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso [hyperlink blocked]
+
 
 
 
