@@ -25,6 +25,7 @@ Bibliotecas utilizadas:
 - Encryptjs (criptografar a senha)
 - Jsonwebtoken (criar token)
 - Qrcode (qrcode 👍)
+- Postgres (conexão com banco de dados online)
 
 ------------------------------------------
 
@@ -36,6 +37,7 @@ Falta fazer:
   
 - 👉 REVISAR TUDO, ISSO É DEVERAS IMPORTANTE. IMPORTANTE TIPO, PRA CACETARALHOS
 - fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso [hyperlink blocked] 💔🥀
+
 
 
 
