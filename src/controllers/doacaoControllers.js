@@ -29,8 +29,9 @@ const postDoacao = async (req, res) => {
             //o email deveria ser da pessoa que tá doando ou de que tá recebendo a doação?
             //chave personalizada q eu n sei sla bro lmao
             // ProvavelDoacao.linkPix = `00020126580014BR.GOV.BCB.PIX0136${ProvavelDoacao.email}5204000053039865405${ProvavelDoacao.valor.toFixed(2)}5802BR5920${ProvavelDoacao.nome.split(" ")[0]}6009Campinas62070503***6304ABCD`;
-            
-            ProvavelDoacao.linkPix = `00020126580014BR.GOV.BCB.PIX0136chavepix-ficticia@exemplo.com5204000053039865405${ProvavelDoacao.valor.toFixed(2)}5802BR5920NomeExemploFictício6009SaoPaulo62070503***6304ABCD`
+
+            //Tomas permitiu colocar esse link, não me julgue
+            ProvavelDoacao.linkPix = `https://www.youtube.com/watch?v=2qBlE2-WL60`
             const NovaDoacao = await Doacao.create(ProvavelDoacao);
 
             //usar esse aqui se for mandar o qrcode no terminal
@@ -54,5 +55,6 @@ const postDoacao = async (req, res) => {
         res.status(500).json({ "erro": "Erro ao processar a doação." });
     }
 };
+
 
 export default postDoacao;
