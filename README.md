@@ -7,7 +7,7 @@ Turma: 2º DS - MTEC da ETEC Bento Quirino
 Integrantes do grupo: 
 
 - Gabriel Kendy Ornelas Shigaki
-- Gabriel Honório Afonso
+- Gabriel Honório da Silva
 - Guilherme Becklas Martinez de Carvalho
 - Nathan Lorenzo Novais
 - Pedro de Souza Bragante
@@ -26,20 +26,6 @@ Bibliotecas utilizadas:
 - Jsonwebtoken (criar token)
 - Qrcode (qrcode 👍)
 - Postgres (conexão com banco de dados online)
-
-------------------------------------------
-
-Falta fazer: 
-
-- criação de link pix em postdoacao
-- perguntar oq caralhos é um linkpix
-
-  
-- 👉 REVISAR TUDO, ISSO É DEVERAS IMPORTANTE. IMPORTANTE TIPO, PRA CACETARALHOS
-- fazer o projeto da bentotec, pq a gente tá atrasado pra caralho pq tão enfiando trabalho e prova até o fundo do nosso [hyperlink blocked] 💔🥀
-
-
-
 
 
 
