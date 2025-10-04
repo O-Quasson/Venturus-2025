@@ -25,10 +25,7 @@ router.delete('/admin/animais/:id', autenticar, delAnimal);
 
 //---------------------------------------
 //divisória épica
-
-router.get('/admin/usuario/:id', autenticar, getUsuarioById);
-
-router.patch('/admin/usuario/:id', autenticar, patchUsuario);
+//pra nada, só tem essas rotas de admin mesmo
 
 
 
