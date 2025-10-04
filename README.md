@@ -1,6 +1,4 @@
-https://prod.liveshare.vsengsaas.visualstudio.com/join?2B4006497E751156E771458C60DB13A1E202
-
-https://github.com/alexnasciment3/projeto_bento_2S_2025
+Nome do grupo: team c00lkidd
 
 Turma: 2º DS - MTEC da ETEC Bento Quirino
 
@@ -26,6 +24,7 @@ Bibliotecas utilizadas:
 - Jsonwebtoken (criar token)
 - Qrcode (qrcode 👍)
 - Postgres (conexão com banco de dados online)
+
 
 
 
