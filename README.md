@@ -25,7 +25,12 @@ Tecnologias e frameworks utilizados:
 - Qrcode (qrcode 👍)
 - Postgres (conexão com banco de dados online)
 
+------------------------------------------
 
+Rotas apresentadas por cada um:
 
-
-
+postLogin, seed e autenticação - Kendy
+postUsuario, getUsuarioById e patchUsuario - Nathan
+postAnimal, getAnimais e getAnimaisAdmin - Guilherme
+getAnimalById, patchAnimal e delAnimal - Bragante
+postDoacao, postAdocoes e postQuestionario - Honório
