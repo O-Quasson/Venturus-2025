@@ -180,13 +180,16 @@ const patchUsuario = async (req, res) => {
 
 const getUsuarioById = async (req, res) => {
     try{
-        const usuarioProcurado = await Usuario.findByPk(req.params.id, {include: Questionario });
+        let usuarioProcurado = await Usuario.findByPk(req.params.id, {include: Questionario });
 
         if(!usuarioProcurado){
             res.status(404).json({"erro": "Tutor não encontrado"});
         }else{
-            usuarioProcurado.senha = descriptografarSenha(usuarioProcurado.senha)
-            res.status(200).json(usuarioProcurado);
+            //dá erro se não converter para json
+            //TypeError: Converting circular structure to JSON
+            usuarioProcurado = usuarioProcurado.toJSON();
+            usuarioProcurado.Questionario = omit(usuarioProcurado.Questionario, ['id','createdAt', 'updatedAt', 'tutorId']);
+            res.status(200).json(omit(usuarioProcurado, ['senha', 'cep', 'idade', 'createdAt', 'updatedAt', 'administrador']));
         };
 
     }catch(error){

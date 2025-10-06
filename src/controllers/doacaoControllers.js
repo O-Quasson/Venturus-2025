@@ -46,6 +46,7 @@ const postDoacao = async (req, res) => {
                 "doacao_id": NovaDoacao.id,
                 nome: NovaDoacao.nome,
                 valor: NovaDoacao.valor,
+                mensagem: NovaDoacao.mensagem,
                 linkPix: NovaDoacao.linkPix,
                 qrcodeCriado
             })

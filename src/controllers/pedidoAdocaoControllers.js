@@ -65,11 +65,11 @@ const postAdocoes = async (req, res) => {
 
                     res.status(201).json({
                         id: novoPedido.id,
-                        usuarioId: novoPedido.usuarioId,
-                        animalId: novoPedido.animalId,
+                        "tutor_id": novoPedido.usuarioId,
+                        "animal_id": novoPedido.animalId,
                         status: novoPedido.status,
                         posicao_fila: novoPedido.posicao_fila,
-                        createdAt: novoPedido.createdAt
+                        "criado_em": novoPedido.createdAt
                     });
                 }
             }

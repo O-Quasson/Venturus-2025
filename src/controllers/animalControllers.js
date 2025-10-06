@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 //esse op é um coiso do sequelize que permite a manipulação de timestamps (data, tempo, etc, sei lá como vocês chamam isso)
 import multer from 'multer';
 //o multer é pra upload de imagem
+import omit from "lodash.omit";
 
 const postAnimal = async (req, res) => {
   try {
@@ -87,12 +88,21 @@ const getAnimais = async (req, res) => {
       order: [["createdAt", "ASC"]]
     });
 
+    const animais2 = [];
+
+    //tirando os campos de "updatedAt" dos registros
+    animais.forEach(animal => {
+      const animal2 = omit(animal.toJSON(), ['updatedAt', 'adotado']);
+      animais2.push(animal2);
+    });
+
     res.status(201).json({
-      "data": animais,
-      "total": animais.length
+      "data": animais2,
+      "total": animais2.length
     });
 
   }catch(error){
+    console.log(error)
     res.status(500).json({ "erro": "Erro ao buscar animais" });
   }
 };
@@ -180,9 +190,17 @@ const getAnimaisAdmin = async (req, res) => {
       order: [["createdAt", "ASC"]]
     });
 
+    const animais2 = [];
+
+    //tirando os campos de "updatedAt" dos registros
+    animais.forEach(animal => {
+      const animal2 = omit(animal.toJSON(), ['updatedAt']);
+      animais2.push(animal2);
+    });
+
     res.status(200).json({
-      "data": animais,
-      "total": animais.length
+      "data": animais2,
+      "total": animais2.length
     });
 
   }catch(error){
@@ -196,15 +214,17 @@ const getAnimaisAdmin = async (req, res) => {
 const getAnimalById = async (req, res) => {
   try{
     //copiado do código de cima só que mudado 2 coisas lmfaooooooooooo
-    const animalBuscado = await Animal.findByPk(req.params.id, { include: {
+    let animalBuscado = await Animal.findByPk(req.params.id, { include: {
       model: PedidoAdocao,
-      attributes: ['id', 'usuarioId', 'status', 'posicao_fila', 'createdAt'],
+      attributes: ['id'],
       order: [['createdAt', 'ASC']]
     }});
 
     if(!animalBuscado){
       res.status(404).json({"erro": "Animal não encontrado"});
     }else{
+      animalBuscado = omit(animalBuscado.toJSON(), ['createdAt', 'updatedAt']);
+      
       res.status(200).json(animalBuscado);
     }
 
