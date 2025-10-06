@@ -18,7 +18,7 @@ Tecnologias e frameworks utilizados:
 - Express.js
 - SQLite
 - Sequelize
-- Lodash.omit (para omição do questionário em patchUsuario)
+- Lodash.omit (para omição de alguns dados em respostas)
 - Multer (para upload de arquivos/imagens em postAnimal e patchAnimal)
 - Encryptjs (criptografar a senha)
 - Jsonwebtoken (criar token)
@@ -34,4 +34,5 @@ Rotas apresentadas por cada um:
 - postAnimal, getAnimais e getAnimaisAdmin - Guilherme
 - getAnimalById, patchAnimal e delAnimal - Bragante
 - postDoacao, postAdocoes e postQuestionario - Honório
+
 
