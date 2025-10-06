@@ -12,7 +12,7 @@ Integrantes do grupo:
 
 ------------------------------------------
 
-Bibliotecas utilizadas: 
+Tecnologias e frameworks utilizados: 
 
 - Node.js
 - Express.js
@@ -24,6 +24,7 @@ Bibliotecas utilizadas:
 - Jsonwebtoken (criar token)
 - Qrcode (qrcode 👍)
 - Postgres (conexão com banco de dados online)
+
 
 
 
