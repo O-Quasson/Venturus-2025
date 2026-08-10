@@ -17,3 +17,5 @@ Exemplo de seed com o sequelize: https://medium.com/@stroklabs/migrations-e-seed
 5 - A parte do QR code/link do Pix é um extra, não é necessário, é pra ser um desafio pra vocês. Existem libs abertas que fazem este tipo de serviço e vocês podem importar uma destas libs, ver como elas funcionam e inserirem elas no projeto. Só deixar claro que a lib deve estar também no README.
 
 Em relação ao projeto geral, eu dei uma verificada rápida e parece que estão desenvolvendo de maneira correta, acho que o ponto da seed vocês até já resolveram. 
+
+https://github.com/O-Quasson/Venturus-2025/commit/ce35f66fdb061098f657b516ecb9be6e87ae62e2
